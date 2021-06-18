@@ -3,7 +3,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
-TextBox textBox = new TextBox(50, 50, 100, color(0), color(255));
+TextBox textBox = new TextBox(730, 60, 300, 200, color(0), color(255));
 
 void setup() {
   size(1280, 720);
@@ -19,4 +19,6 @@ void draw() {
   text ("Epidemic simulator V2", 890, 30);
   
   textBox.render();
+  
+  println(textBox.text);
 }

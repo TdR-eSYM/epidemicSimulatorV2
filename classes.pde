@@ -1,13 +1,14 @@
 class TextBox{
-  int x, y, size;
+  int x, y, sizex, sizey;
   String text = "";
   boolean focus = false;
   boolean release = true;
   color foreColor, backColor;
-  TextBox(int x, int y, int size, color foreColor, color backColor){
+  TextBox(int x, int y, int sizex, int sizey, color foreColor, color backColor){
     this.x = x;
     this.y = y;
-    this.size = size;
+    this.sizey = sizey;
+    this.sizex = sizex;
     this.foreColor = foreColor;
     this.backColor = backColor;
   }
@@ -18,10 +19,10 @@ class TextBox{
     }else{
       fill(backColor);
     }
-    rect(x, y, width-3, size);
+    rect(x, y, sizex, sizey/4);
     
     fill(foreColor);
-    textSize(size/1.4);
-    text(text, x+5, y+size/1.3);
+    textSize(sizey/5);
+    text(text, x + 7, y + sizey/5);
   }
 }
