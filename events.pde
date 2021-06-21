@@ -1,27 +1,51 @@
 void mouseClicked() {
-  if (mouseY > textBox.y && mouseY < textBox.y + textBox.sizey && mouseX > textBox.x && mouseX < textBox.x + textBox.sizex){
-    textBox.focus = true;
+//Textbox number of infected & agents
+  if (mouseY > agents.y && mouseY < agents.y + agents.sizey && mouseX > agents.x && mouseX < agents.x + agents.sizex){
+    agents.focus = true;
   } else {
-    textBox.focus = false;
+    agents.focus = false;
+  }
+  if (mouseY > infectats.y && mouseY < infectats.y + infectats.sizey && mouseX > infectats.x && mouseX < infectats.x + infectats.sizex){
+    infectats.focus = true;
+  } else {
+    infectats.focus = false;
   }
 }
 
 void keyPressed() {
-  if (textBox.focus) {
+  if (agents.focus) {
     if(key == ''){ // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
       //Ctrl-v
-      textBox.text += GetTextFromClipboard();
+      agents.text += GetTextFromClipboard();
       return;
     }
     switch(keyCode) {
     case 8:
-      if (textBox.text.length() != 0) {
-        textBox.text = textBox.text.substring(0, textBox.text.length()-1);
+      if (agents.text.length() != 0) {
+        agents.text = agents.text.substring(0, agents.text.length()-1);
       }
       break;
 
     default:
-      if (keyCode > 31) textBox.text += key;
+      if (keyCode > 31) agents.text += key;
+      break;
+    }
+  }
+  if (infectats.focus) {
+    if(key == ''){ // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
+      //Ctrl-v
+      infectats.text += GetTextFromClipboard();
+      return;
+    }
+    switch(keyCode) {
+    case 8:
+      if (infectats.text.length() != 0) {
+        infectats.text = infectats.text.substring(0, infectats.text.length()-1);
+      }
+      break;
+
+    default:
+      if (keyCode > 31) infectats.text += key;
       break;
     }
   }
