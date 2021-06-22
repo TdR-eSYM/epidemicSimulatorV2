@@ -13,6 +13,7 @@ void mouseClicked() {
 }
 
 void keyPressed() {
+  int n;
   if (agents.focus) {
     if(key == ''){ // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
       //Ctrl-v
@@ -27,8 +28,12 @@ void keyPressed() {
       break;
 
     default:
+     n = int(key);  
+     n = n - 48;
+     if(n >= 0 && n <= 9){
       if (keyCode > 31) agents.text += key;
       break;
+     }
     }
   }
   if (infectats.focus) {
@@ -44,9 +49,13 @@ void keyPressed() {
       }
       break;
 
-    default:
+     default:
+     n = int(key);  
+     n = n - 48;
+     if(n >= 0 && n <= 9){
       if (keyCode > 31) infectats.text += key;
       break;
+     }
     }
   }
 }

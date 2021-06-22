@@ -4,6 +4,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
 // Textbox starter number of agents
+
 TextBox agents = new TextBox(860, 100, 125, 125, color(0), color(255));
 
 // Textbox starter number of infected
@@ -14,6 +15,8 @@ Button stop = new Button (255, 0, 0, 760, 60, 120, 30);
 Button pause = new Button (255, 255, 0, 940, 60, 120, 30);
 
 Button start = new Button (0, 255, 0, 1120, 60, 120, 30);
+
+Graph infected = new Graph (740, 380, 520, 320, color(0, 0, 255, 255));
 
 void setup() {
   size(1280, 720);
@@ -32,6 +35,10 @@ void draw() {
   
   pause.render();
   
+  infected.update(300);
+  
+  infected.render();
+  
   fill(0);
   textSize (20);
   text ("Epidemic simulator V2", 890, 30);
@@ -49,6 +56,9 @@ void draw() {
   text ("Pause", 974, 82);
    
   text ("Start", 1160, 82);
+  
+  textSize (15);
+  text ("Gràfic susceptibles i infectats", 750, 370);
   
   
  // Written info in console

@@ -1,3 +1,46 @@
+class Graph {
+  int xquadre;
+  int yquadre;
+  int xsize;
+  int ysize;
+  int [] g;
+  int index;
+  color c;
+  
+  Graph (int xquadre, int yquadre, int xsize, int ysize, color c){
+    this.xquadre = xquadre;
+    this.yquadre = yquadre;
+    this.xsize = xsize;
+    this.ysize = ysize;
+    this.index = xquadre;
+    this.g = new int[xsize + xquadre];
+    this.c = c;
+  }
+  void render() {
+    fill (255);
+  rect (xquadre, yquadre, xsize, ysize);
+  stroke (c);
+  for (int i = 0; i < (xsize + xquadre); i++) {
+      if (g[i] == 0) continue;
+      line(i, g[i], i, (ysize + yquadre));
+    }
+    stroke(0);
+  }
+  void update(int data) {
+    if (index == xsize + xquadre - 1) {
+      clean();
+    }
+    g[index++] =yquadre + ysize - data;
+  }
+
+  private void clean() {
+    for (int i = 0; i < xsize + xquadre; i++) {
+      g[i] = 0;
+    }
+    index = xquadre;
+  }
+}
+
 class Button {
   int r;
   int g;
