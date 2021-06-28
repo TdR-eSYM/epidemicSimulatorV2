@@ -1,7 +1,15 @@
+import java.util.Random;
+
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+
+float MEAN, STD_DEV;
+
+Random gen;
+
+Walker[] walkers;
 
 // Textbox starter number of agents
 
@@ -20,9 +28,17 @@ Graph infected = new Graph (740, 380, 520, 320, color(0, 0, 255, 255));
 
 void setup() {
   size(1280, 720);
+  
+  gen = new Random();
+  
+  spawnWalkers(400, 10, 0.01);
+  
+  MEAN = 3;
+  STD_DEV = 1;
 }
 void draw() {
  // Non-interactive UI
+ 
   fill (255);
   square (0, 0, 720);
   fill (186, 230, 255);
