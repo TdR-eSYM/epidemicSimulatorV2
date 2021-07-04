@@ -1,10 +1,10 @@
 class Walker {
   int size;
   float x, y;
-  
+
   // Possible agent states
   boolean inf, dead, immune;
-  
+
   Walker(float x, float y, int size, boolean infec) {
     this.x = x;
     this.y = y;
@@ -22,15 +22,15 @@ class Walker {
     speed = (speed * STD_DEV) + MEAN;
 
     float r = (float) gen.nextGaussian();
-  r = (r * STD_DEV) + MEAN;
-  x += r * cos(random(2 * PI));
-  y += r * sin(random(2 * PI));
+    r = (r * STD_DEV) + MEAN;
+    x += r * cos(random(2 * PI));
+    y += r * sin(random(2 * PI));
 
     // Constrain agent position inside the screen.
-    x = constrain(x, 0, width-1);
+    x = constrain(x, 0, 720-1);
     y = constrain(y, 0, height-1);
   }
-  
+
   // Agent falls on two of the defined states when infected
   void outcome(float die, float recover) {
     if (inf) {
@@ -62,7 +62,7 @@ class Walker {
       }
     }
   }
-  
+
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)
   void render() {
     if (inf) {

@@ -39,9 +39,19 @@ void setup() {
 void draw() {
   // Non-interactive UI
   background(255);
+
+  for (int i = 0; i < walkers.length; i++) {
+    walkers[i].step();
+    walkers[i].outcome(0.01, 0.001);
+    walkers[i].infect(1/frameRate);
+    walkers[i].render();
+  }
+
   fill (186, 230, 255);
   rect (720, 0, 560, 720);
   line (720, 45, 1280, 45);
+
+  //Simulation drawing
 
   start.render();
 
@@ -82,13 +92,4 @@ void draw() {
   infectats.render();
 
   println(infectats.text);
-
-  //Simulation drawing
-
-  for (int i = 0; i < walkers.length; i++) {
-    walkers[i].step();
-    walkers[i].outcome(0.01, 0.001);
-    walkers[i].infect(1/frameRate);
-    walkers[i].render();
-  }
 }
