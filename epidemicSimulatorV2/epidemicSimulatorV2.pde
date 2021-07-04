@@ -38,9 +38,7 @@ void setup() {
 }
 void draw() {
   // Non-interactive UI
-
-  fill (255);
-  square (0, 0, 720);
+  background(255);
   fill (186, 230, 255);
   rect (720, 0, 560, 720);
   line (720, 45, 1280, 45);
