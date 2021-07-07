@@ -1,15 +1,17 @@
 class Simulation {
+  int state;
   Walker[] walkers;
   int agentNum, agentSize;
   float startInfProb;
-  
+
   Simulation(int agentNum, int agentSize, float startInfProb) {
     this.agentNum = agentNum;
     this.agentSize = agentSize;
     this.startInfProb = startInfProb;
+    state = SimStates.PAUSED;
   }
-  
-  void setup(){
+
+  void setup() {
     walkers = new Walker[agentNum];
     for (int i = 0; i < agentNum; i++) {
       boolean inf = false;
@@ -23,14 +25,32 @@ class Simulation {
     }
   }
 
+  void tick() {
+    if (state != SimStates.PAUSED) {
+      for (int i = 0; i < agentNum; i++) {
+        walkers[i].step();
+        walkers[i].outcome(0.01, 0.001);
+        walkers[i].infect(1/frameRate);
+        walkers[i].render();
+      }
+    }
+  }
+
   void start() {
+    state = SimStates.RUNNING;
   }
 
   void pause() {
+    state = SimStates.PAUSED;
   }
 
   void stop() {
   }
+}
+
+class SimStates {
+  static final int PAUSED = 0;
+  static final int RUNNING = 1;
 }
 
 class Walker {

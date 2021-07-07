@@ -40,12 +40,7 @@ void draw() {
   // Non-interactive UI
   background(255);
 
-  for (int i = 0; i < sim.agentNum; i++) {
-    sim.walkers[i].step();
-    sim.walkers[i].outcome(0.01, 0.001);
-    sim.walkers[i].infect(1/frameRate);
-    sim.walkers[i].render();
-  }
+  sim.tick();
 
   fill (186, 230, 255);
   rect (720, 0, 560, 720);
