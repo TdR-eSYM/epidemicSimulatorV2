@@ -42,6 +42,7 @@ class Graph {
 }
 
 class Button {
+  String name;
   int r;
   int g;
   int b;
@@ -49,7 +50,8 @@ class Button {
   int y;
   int sizex;
   int sizey;
-  Button (int r, int g, int b, int x, int y, int sizex, int sizey) {
+  Button (String name, int r, int g, int b, int x, int y, int sizex, int sizey) {
+    this.name = name;
     this.r = r;
     this.g = g;
     this.b = b;
@@ -62,6 +64,7 @@ class Button {
 
     if (mousePressed && ((mouseY > y && mouseY < y + sizey) && (mouseX > x && mouseX < x + sizex))) {
       fill ( r - 20, g - 20, b);
+      buttonPressed(name);
     } else { 
       fill (r, g, b);
     }

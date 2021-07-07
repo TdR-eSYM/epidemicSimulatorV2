@@ -5,7 +5,7 @@ void frameRateShow() {
   } else if (fps <= 15) {
     fill(255, 0, 0);
   } else {
-    fill(0, 185, 0);
+    fill(0, 205, 0);
   }
 
   textSize(18);

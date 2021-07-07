@@ -18,11 +18,11 @@ TextBox agents = new TextBox(860, 100, 125, 125, color(0), color(255));
 // Textbox starter number of infected
 TextBox infectats = new TextBox(1140, 100, 125, 125, color(0), color(255));
 
-Button stop = new Button (255, 0, 0, 760, 60, 120, 30);
+Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30);
 
-Button pause = new Button (255, 255, 0, 940, 60, 120, 30);
+Button pause = new Button ("pause", 255, 255, 0, 940, 60, 120, 30);
 
-Button start = new Button (0, 255, 0, 1120, 60, 120, 30);
+Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30);
 
 Graph infected = new Graph (740, 380, 520, 320, color(0, 0, 255, 255));
 
