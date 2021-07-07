@@ -1,3 +1,17 @@
+void frameRateShow() {
+  int fps = round(frameRate);
+  if (fps <= 30 && fps > 15) {
+    fill(205, 205, 0);
+  } else if (fps <= 15) {
+    fill(255, 0, 0);
+  } else {
+    fill(0, 185, 0);
+  }
+
+  textSize(18);
+  text("FPS: " + fps, 740, 30);
+}
+
 // https://forum.processing.org/two/discussion/27473/paste-and-copy-text
 String GetTextFromClipboard () {
   String text = (String) GetFromClipboard(DataFlavor.stringFlavor);

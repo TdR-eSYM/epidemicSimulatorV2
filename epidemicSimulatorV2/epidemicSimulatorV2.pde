@@ -31,7 +31,7 @@ void setup() {
 
   gen = new Random();
 
-  spawnWalkers(400, 10, 0.01);
+  spawnWalkers(600, 10, 0.01);
 
   MEAN = 3;
   STD_DEV = 1;
@@ -62,11 +62,10 @@ void draw() {
   infected.update(300);
 
   infected.render();
-
-  fill(0);
-  textSize(18);
-  text("FPS: " + round(frameRate), 740, 30);
   
+  frameRateShow();
+  
+  fill(0);
   textSize (20);
   text ("Epidemic simulator V2", 890, 30);
 
