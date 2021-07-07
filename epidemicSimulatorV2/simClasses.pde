@@ -1,7 +1,7 @@
 class Simulation {
   int state;
   Walker[] walkers;
-  int agentNum, agentSize;
+  int agentNum, agentSize, infected, dead, immune;
   float startInfProb;
 
   Simulation(int agentNum, int agentSize, float startInfProb) {
@@ -14,14 +14,14 @@ class Simulation {
   void setup() {
     walkers = new Walker[agentNum];
     for (int i = 0; i < agentNum; i++) {
-      boolean inf = false;
+      int state = AgentStates.SUSCEPTIBLE;
       float xPos = random(0, 720);
       float yPos = random(0, height);
 
       if (random(1) < startInfProb) {
-        inf = true;
+        state = AgentStates.INFECTED;
       }
-      walkers[i] = new Walker(xPos, yPos, agentSize, inf);
+      walkers[i] = new Walker(xPos, yPos, agentSize, state);
     }
   }
 
@@ -29,6 +29,10 @@ class Simulation {
     if(state == SimStates.STOPPED) return;
     for (int i = 0; i < agentNum; i++) {
       if (state != SimStates.PAUSED) {
+        if (walkers[i].state == AgentStates.INFECTED) infected++;
+        if (walkers[i].state == AgentStates.DEAD) dead++;
+        if (walkers[i].state == AgentStates.RECOVERED) immune++;
+        
         walkers[i].step();
         walkers[i].outcome(0.01, 0.001);
         walkers[i].infect(1/frameRate);
@@ -56,25 +60,30 @@ class SimStates {
   static final int RUNNING = 2;
 }
 
+class AgentStates {
+  static final int SUSCEPTIBLE = 0;
+  static final int INFECTED = 1;
+  static final int RECOVERED = 2;
+  static final int DEAD = 3;
+}
+
 class Walker {
   int size;
   float x, y;
 
   // Possible agent states
-  boolean inf, dead, immune;
+  int state;
 
-  Walker(float x, float y, int size, boolean infec) {
+  Walker(float x, float y, int size, int state) {
     this.x = x;
     this.y = y;
     this.size = size;
-    inf = infec;
-    dead = false;
-    immune = false;
+    this.state = state;
   }
 
   // Makes a step in a random direction with a random amount of distance determined by a normal distribution
   void step() {
-    if (dead) return;
+    if (state == AgentStates.DEAD) return;
 
     float speed = (float) gen.nextGaussian();
     speed = (speed * STD_DEV) + MEAN;
@@ -91,28 +100,26 @@ class Walker {
 
   // Agent falls on two of the defined states when infected
   void outcome(float die, float recover) {
-    if (inf) {
+    if (state == AgentStates.INFECTED) {
       if (random(1) < die/frameRate) {
-        dead = true;
-        inf = false;
+        state = AgentStates.DEAD;
       }
       if (random(1) < recover/frameRate) {
-        immune = true;
-        inf = false;
+        state = AgentStates.RECOVERED;
       }
     }
   }
 
   // Checks if the infected agent is in contact with any other agent and handles the possibility of an infection spread
   void infect(float chance) {
-    if (inf) {
+    if (state == AgentStates.INFECTED) {
       for (int i = 0; i < sim.agentNum; i++) {
         Walker other = sim.walkers[i];
-        if (!other.dead && !other.immune) {
+        if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
           if (x + size/2 > other.x - other.size/2 && x - size/2 < other.x + other.size/2) {
             if (y + size/2 > other.y - other.size/2 && y - size/2 < other.y + other.size/2) {
               if (random(1) < chance) {
-                sim.walkers[i].inf = true;
+                sim.walkers[i].state = AgentStates.INFECTED;
               }
             }
           }
@@ -123,11 +130,11 @@ class Walker {
 
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)
   void render() {
-    if (inf) {
+    if (state == AgentStates.INFECTED) {
       fill(255, 0, 0);
-    } else if (dead) {
+    } else if (state == AgentStates.DEAD) {
       fill(0);
-    } else if (immune) {
+    } else if (state == AgentStates.RECOVERED) {
       fill(0, 0, 255);
     } else {
       fill(0, 255, 0);
