@@ -1,3 +1,38 @@
+class Simulation {
+  Walker[] walkers;
+  int agentNum, agentSize;
+  float startInfProb;
+  
+  Simulation(int agentNum, int agentSize, float startInfProb) {
+    this.agentNum = agentNum;
+    this.agentSize = agentSize;
+    this.startInfProb = startInfProb;
+  }
+  
+  void setup(){
+    walkers = new Walker[agentNum];
+    for (int i = 0; i < agentNum; i++) {
+      boolean inf = false;
+      float xPos = random(0, 720);
+      float yPos = random(0, height);
+
+      if (random(1) < startInfProb) {
+        inf = true;
+      }
+      walkers[i] = new Walker(xPos, yPos, agentSize, inf);
+    }
+  }
+
+  void start() {
+  }
+
+  void pause() {
+  }
+
+  void stop() {
+  }
+}
+
 class Walker {
   int size;
   float x, y;
@@ -48,13 +83,13 @@ class Walker {
   // Checks if the infected agent is in contact with any other agent and handles the possibility of an infection spread
   void infect(float chance) {
     if (inf) {
-      for (int i = 0; i < walkers.length; i++) {
-        Walker other = walkers[i];
+      for (int i = 0; i < sim.agentNum; i++) {
+        Walker other = sim.walkers[i];
         if (!other.dead && !other.immune) {
           if (x + size/2 > other.x - other.size/2 && x - size/2 < other.x + other.size/2) {
             if (y + size/2 > other.y - other.size/2 && y - size/2 < other.y + other.size/2) {
               if (random(1) < chance) {
-                walkers[i].inf = true;
+                sim.walkers[i].inf = true;
               }
             }
           }

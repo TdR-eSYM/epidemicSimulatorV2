@@ -52,17 +52,3 @@ static final javax.swing.JFrame getJFrame(final PSurface surf) {
     ((processing.awt.PSurfaceAWT.SmoothCanvas)
     surf.getNative()).getFrame();
 }
-
-void spawnWalkers(int num, int size, float infChance) {
-  walkers = new Walker[num];
-  for (int i = 0; i < num; i++) {
-    boolean inf = false;
-    float xPos = random(0, 720);
-    float yPos = random(0, height);
-
-    if (random(1) < infChance) {
-      inf = true;
-    }
-    walkers[i] = new Walker(xPos, yPos, size, inf);
-  }
-}

@@ -5,11 +5,11 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
+Simulation sim = new Simulation(400, 10, 0.01);
+
 float MEAN, STD_DEV;
 
 Random gen;
-
-Walker[] walkers;
 
 // Textbox starter number of agents
 
@@ -31,20 +31,20 @@ void setup() {
 
   gen = new Random();
 
-  spawnWalkers(600, 10, 0.01);
-
   MEAN = 3;
   STD_DEV = 1;
+  
+  sim.setup();
 }
 void draw() {
   // Non-interactive UI
   background(255);
 
-  for (int i = 0; i < walkers.length; i++) {
-    walkers[i].step();
-    walkers[i].outcome(0.01, 0.001);
-    walkers[i].infect(1/frameRate);
-    walkers[i].render();
+  for (int i = 0; i < sim.agentNum; i++) {
+    sim.walkers[i].step();
+    sim.walkers[i].outcome(0.01, 0.001);
+    sim.walkers[i].infect(1/frameRate);
+    sim.walkers[i].render();
   }
 
   fill (186, 230, 255);
