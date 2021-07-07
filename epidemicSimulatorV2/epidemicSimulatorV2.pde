@@ -24,7 +24,8 @@ Button pause = new Button ("pause", 255, 255, 0, 940, 60, 120, 30);
 
 Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30);
 
-Graph infected = new Graph (740, 380, 520, 320, color(0, 0, 255, 255));
+Graph infected = new Graph (740, 380, 520, 320, color(200, 0, 0, 200));
+Graph susceptible = new Graph (740, 380, 520, 320, color(0, 200, 0, 200));
 
 void setup() {
   size(1280, 720);
@@ -46,6 +47,10 @@ void draw() {
   rect (720, 0, 560, 720);
   line (720, 45, 1280, 45);
 
+  //Graphs background
+  fill (255);
+  rect (740, 380, 520, 320);
+
   //Simulation drawing
 
   start.render();
@@ -54,8 +59,10 @@ void draw() {
 
   pause.render();
 
-  infected.update(300);
+  infected.update(sim.infected, sim.agentNum);
+  susceptible.update(sim.agentNum-sim.infected-sim.dead-sim.immune, sim.agentNum); // This is too long, calculate inside class
 
+  susceptible.render();
   infected.render();
   
   frameRateShow();

@@ -6,8 +6,8 @@ class Graph {
   int [] g;
   int index;
   color c;
-  
-  Graph (int xquadre, int yquadre, int xsize, int ysize, color c){
+
+  Graph (int xquadre, int yquadre, int xsize, int ysize, color c) {
     this.xquadre = xquadre;
     this.yquadre = yquadre;
     this.xsize = xsize;
@@ -17,20 +17,19 @@ class Graph {
     this.c = c;
   }
   void render() {
-    fill (255);
-  rect (xquadre, yquadre, xsize, ysize);
-  stroke (c);
-  for (int i = 0; i < (xsize + xquadre); i++) {
+    stroke (c);
+    for (int i = 0; i < (xsize + xquadre); i++) {
       if (g[i] == 0) continue;
       line(i, g[i], i, (ysize + yquadre));
     }
     stroke(0);
   }
-  void update(int data) {
+  void update(int data, float agents) {
     if (index == xsize + xquadre - 1) {
       clean();
     }
-    g[index++] =yquadre + ysize - data;
+    println(data);
+    g[index++] = yquadre + ysize - int((data/agents)*ysize);
   }
 
   private void clean() {
