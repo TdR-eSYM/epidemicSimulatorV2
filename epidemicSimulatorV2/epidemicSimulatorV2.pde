@@ -64,6 +64,9 @@ void draw() {
   infected.render();
 
   fill(0);
+  textSize(18);
+  text("FPS: " + round(frameRate), 740, 30);
+  
   textSize (20);
   text ("Epidemic simulator V2", 890, 30);
 
