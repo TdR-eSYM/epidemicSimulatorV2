@@ -27,6 +27,9 @@ class Simulation {
 
   void tick() {
     if(state == SimStates.STOPPED) return;
+    infected = 0;
+    dead = 0;
+    immune = 0;
     for (int i = 0; i < agentNum; i++) {
       if (state != SimStates.PAUSED) {
         if (walkers[i].state == AgentStates.INFECTED) infected++;

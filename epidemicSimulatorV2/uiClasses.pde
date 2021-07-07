@@ -1,42 +1,41 @@
 class Graph {
-  int xquadre;
-  int yquadre;
-  int xsize;
-  int ysize;
+  int x;
+  int y;
+  int sizex;
+  int sizey;
   int [] g;
   int index;
   color c;
 
-  Graph (int xquadre, int yquadre, int xsize, int ysize, color c) {
-    this.xquadre = xquadre;
-    this.yquadre = yquadre;
-    this.xsize = xsize;
-    this.ysize = ysize;
-    this.index = xquadre;
-    this.g = new int[xsize + xquadre];
+  Graph (int x, int y, int sizex, int sizey, color c) {
+    this.x = x;
+    this.y = y;
+    this.sizex = sizex;
+    this.sizey = sizey;
+    this.index = x;
+    this.g = new int[sizex + x];
     this.c = c;
   }
   void render() {
     stroke (c);
-    for (int i = 0; i < (xsize + xquadre); i++) {
+    for (int i = 0; i < (sizex + x); i++) {
       if (g[i] == 0) continue;
-      line(i, g[i], i, (ysize + yquadre));
+      line(i, g[i], i, (sizey + y));
     }
     stroke(0);
   }
   void update(int data, float agents) {
-    if (index == xsize + xquadre - 1) {
+    if (index == sizex + x - 1) {
       clean();
     }
-    println(data);
-    g[index++] = yquadre + ysize - int((data/agents)*ysize);
+    g[index++] = y + sizey - int((data/agents)*sizey);
   }
 
   private void clean() {
-    for (int i = 0; i < xsize + xquadre; i++) {
+    for (int i = 0; i < sizex + x; i++) {
       g[i] = 0;
     }
-    index = xquadre;
+    index = x;
   }
 }
 
