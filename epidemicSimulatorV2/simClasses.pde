@@ -8,7 +8,7 @@ class Simulation {
     this.agentNum = agentNum;
     this.agentSize = agentSize;
     this.startInfProb = startInfProb;
-    state = SimStates.PAUSED;
+    state = SimStates.STOPPED;
   }
 
   void setup() {
@@ -26,13 +26,14 @@ class Simulation {
   }
 
   void tick() {
-    if (state != SimStates.PAUSED) {
-      for (int i = 0; i < agentNum; i++) {
+    if(state == SimStates.STOPPED) return;
+    for (int i = 0; i < agentNum; i++) {
+      if (state != SimStates.PAUSED) {
         walkers[i].step();
         walkers[i].outcome(0.01, 0.001);
         walkers[i].infect(1/frameRate);
-        walkers[i].render();
       }
+      walkers[i].render();
     }
   }
 
@@ -45,12 +46,14 @@ class Simulation {
   }
 
   void stop() {
+    state = SimStates.STOPPED;
   }
 }
 
 class SimStates {
-  static final int PAUSED = 0;
-  static final int RUNNING = 1;
+  static final int STOPPED = 0;
+  static final int PAUSED = 1;
+  static final int RUNNING = 2;
 }
 
 class Walker {

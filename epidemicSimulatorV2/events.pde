@@ -1,10 +1,13 @@
 void buttonPressed(String name) {
   switch(name) {
   case "stop":
+    sim.stop();
     break;
   case "pause":
+    sim.pause();
     break;
   case "start":
+    sim.start();
     break;
   }
 }
