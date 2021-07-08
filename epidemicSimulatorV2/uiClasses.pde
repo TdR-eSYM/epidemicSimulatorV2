@@ -3,7 +3,7 @@ class Graph {
   int y;
   int sizex;
   int sizey;
-  int [] g;
+  int [] gData;
   int index;
   color c;
 
@@ -13,14 +13,14 @@ class Graph {
     this.sizex = sizex;
     this.sizey = sizey;
     this.index = x;
-    this.g = new int[sizex + x];
+    this.gData = new int[sizex + x];
     this.c = c;
   }
   void render() {
     stroke (c);
     for (int i = 0; i < (sizex + x); i++) {
-      if (g[i] == 0) continue;
-      line(i, g[i], i, (sizey + y));
+      if (gData[i] == 0) continue;
+      line(i, gData[i], i, (sizey + y));
     }
     stroke(0);
   }
@@ -28,12 +28,12 @@ class Graph {
     if (index == sizex + x - 1) {
       clean();
     }
-    g[index++] = y + sizey - int((data/agents)*sizey);
+    gData[index++] = y + sizey - int((data/agents)*sizey);
   }
 
   private void clean() {
     for (int i = 0; i < sizex + x; i++) {
-      g[i] = 0;
+      gData[i] = 0;
     }
     index = x;
   }
