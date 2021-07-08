@@ -54,6 +54,7 @@ class Simulation {
 
   void stop() {
     state = SimStates.STOPPED;
+    this.setup();
   }
 }
 
