@@ -96,4 +96,5 @@ void draw() {
   infectats.render();
 
   println(infectats.text);
+  
 }
