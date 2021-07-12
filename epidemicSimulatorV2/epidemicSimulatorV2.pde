@@ -18,6 +18,9 @@ TextBox agents = new TextBox(860, 100, 125, 125, color(0), color(255));
 // Textbox starter number of infected
 TextBox infectats = new TextBox(1140, 100, 125, 125, color(0), color(255));
 
+// Textbox time where vacunation starts
+TextBox vacunacio = new TextBox(1045, 223, 125, 125, color(0), color(255));
+
 Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30);
 
 Button pause = new Button ("pause", 255, 255, 0, 940, 60, 120, 30);
@@ -77,7 +80,13 @@ void draw() {
 
   text ("Nº de morts:", 740, 165);
 
-  text ("Nº de recuperats:", 1000, 165);
+  text ("Nº d'infectats:", 1000, 165);
+  
+  text ("Nº de recuperats:", 740, 205);
+  
+  text ("Començament de la vacunació:", 740, 245);
+  
+  text ("Nº de vacunats:", 740, 285);
 
   text ("Stop", 800, 82);
 
@@ -96,5 +105,9 @@ void draw() {
   infectats.render();
 
   println(infectats.text);
+  
+  vacunacio.render();
+  
+  println(vacunacio.text);
   
 }
