@@ -24,6 +24,11 @@ void mouseClicked() {
   } else {
     infectats.focus = false;
   }
+  if (mouseY > vacunacio.y && mouseY < vacunacio.y + vacunacio.sizey && mouseX > vacunacio.x && mouseX < vacunacio.x + vacunacio.sizex) {
+    vacunacio.focus = true;
+  } else {
+    vacunacio.focus = false;
+  }
 }
 
 void keyPressed() {
@@ -68,6 +73,28 @@ void keyPressed() {
       n = n - 48;
       if (n >= 0 && n <= 9) {
         if (keyCode > 31) infectats.text += key;
+        break;
+      }
+    }
+  }
+  if (vacunacio.focus) {
+    if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
+      //Ctrl-v
+      vacunacio.text += GetTextFromClipboard();
+      return;
+    }
+    switch(keyCode) {
+    case 8:
+      if (vacunacio.text.length() != 0) {
+        vacunacio.text = vacunacio.text.substring(0, vacunacio.text.length()-1);
+      }
+      break;
+
+    default:
+      n = int(key);  
+      n = n - 48;
+      if (n >= 0 && n <= 9) {
+        if (keyCode > 31) vacunacio.text += key;
         break;
       }
     }
