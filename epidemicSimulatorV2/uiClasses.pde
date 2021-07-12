@@ -15,29 +15,24 @@ class Graph {
     this.index = x;
     this.gData = new int[sizex + x];
     this.c = c;
-    
   }
   void render() {
-    if (sim.state == SimStates.RUNNING) {
-    stroke (c);
-    for (int i = 0; i < (sizex + x); i++) {
-      if (gData[i] == 0) continue;
-      line(i, gData[i], i, (sizey + y));
-    }
-    stroke(0);
-    } else {
+    if (sim.state != SimStates.STOPPED) {
+      stroke (c);
       for (int i = 0; i < (sizex + x); i++) {
-      if (gData[i] == 0) continue;
+        if (gData[i] == 0) continue;
+        line(i, gData[i], i, (sizey + y));
+      }
+      stroke(0);
     }
   }
-  }
-  
+
   void update(int data, float agents) {
     if (index == sizex + x - 1) {
       clean();
     }
     if (sim.state == SimStates.RUNNING) {
-    gData[index++] = y + sizey - int((data/agents)*sizey);
+      gData[index++] = y + sizey - int((data/agents)*sizey);
     }
   }
 
