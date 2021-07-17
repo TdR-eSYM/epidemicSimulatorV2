@@ -15,6 +15,7 @@ void buttonPressed(String name) {
 void mouseClicked() {
   //Textbox number of infected & agents
   for (int i = 0; i < textBoxes.length; i++) {
+    if (textBoxes[i].blocked) continue;
     if (mouseY > textBoxes[i].y && mouseY < textBoxes[i].y + textBoxes[i].sizey && mouseX > textBoxes[i].x && mouseX < textBoxes[i].x + textBoxes[i].sizex) {
       textBoxes[i].focus = true;
     } else {
@@ -25,47 +26,27 @@ void mouseClicked() {
 
 void keyPressed() {
   int n;
-  if (suceptibleNumTB.focus) {
-    if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
-      //Ctrl-v
-      suceptibleNumTB.text += GetTextFromClipboard();
-      return;
-    }
-    switch(keyCode) {
-    case 8:
-      if (suceptibleNumTB.text.length() != 0) {
-        suceptibleNumTB.text = suceptibleNumTB.text.substring(0, suceptibleNumTB.text.length()-1);
+  for (int i = 0; i < textBoxes.length; i++) {
+    if (textBoxes[i].focus) {
+      if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
+        //Ctrl-v
+        textBoxes[i].text += GetTextFromClipboard();
+        return;
       }
-      break;
-
-    default:
-      n = int(key);  
-      n = n - 48;
-      if (n >= 0 && n <= 9) {
-        if (keyCode > 31) suceptibleNumTB.text += key;
+      switch(keyCode) {
+      case 8:
+        if (textBoxes[i].text.length() != 0) {
+          textBoxes[i].text = textBoxes[i].text.substring(0, textBoxes[i].text.length()-1);
+        }
         break;
-      }
-    }
-  }
-  if (infectedNumTB.focus) {
-    if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
-      //Ctrl-v
-      infectedNumTB.text += GetTextFromClipboard();
-      return;
-    }
-    switch(keyCode) {
-    case 8:
-      if (infectedNumTB.text.length() != 0) {
-        infectedNumTB.text = infectedNumTB.text.substring(0, infectedNumTB.text.length()-1);
-      }
-      break;
 
-    default:
-      n = int(key);  
-      n = n - 48;
-      if (n >= 0 && n <= 9) {
-        if (keyCode > 31) infectedNumTB.text += key;
-        break;
+      default:
+        n = int(key);  
+        n = n - 48;
+        if (n >= 0 && n <= 9) {
+          if (keyCode > 31) textBoxes[i].text += key;
+          break;
+        }
       }
     }
   }
