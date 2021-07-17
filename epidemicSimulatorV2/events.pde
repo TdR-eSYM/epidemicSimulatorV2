@@ -14,10 +14,10 @@ void buttonPressed(String name) {
 
 void mouseClicked() {
   //Textbox number of infected & agents
-  if (mouseY > agents.y && mouseY < agents.y + agents.sizey && mouseX > agents.x && mouseX < agents.x + agents.sizex) {
-    agents.focus = true;
+  if (mouseY > agentNumTextBox.y && mouseY < agentNumTextBox.y + agentNumTextBox.sizey && mouseX > agentNumTextBox.x && mouseX < agentNumTextBox.x + agentNumTextBox.sizex) {
+    agentNumTextBox.focus = true;
   } else {
-    agents.focus = false;
+    agentNumTextBox.focus = false;
   }
   if (mouseY > infectats.y && mouseY < infectats.y + infectats.sizey && mouseX > infectats.x && mouseX < infectats.x + infectats.sizex) {
     infectats.focus = true;
@@ -33,16 +33,16 @@ void mouseClicked() {
 
 void keyPressed() {
   int n;
-  if (agents.focus) {
+  if (agentNumTextBox.focus) {
     if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
       //Ctrl-v
-      agents.text += GetTextFromClipboard();
+      agentNumTextBox.text += GetTextFromClipboard();
       return;
     }
     switch(keyCode) {
     case 8:
-      if (agents.text.length() != 0) {
-        agents.text = agents.text.substring(0, agents.text.length()-1);
+      if (agentNumTextBox.text.length() != 0) {
+        agentNumTextBox.text = agentNumTextBox.text.substring(0, agentNumTextBox.text.length()-1);
       }
       break;
 
@@ -50,7 +50,7 @@ void keyPressed() {
       n = int(key);  
       n = n - 48;
       if (n >= 0 && n <= 9) {
-        if (keyCode > 31) agents.text += key;
+        if (keyCode > 31) agentNumTextBox.text += key;
         break;
       }
     }

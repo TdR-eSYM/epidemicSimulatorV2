@@ -23,6 +23,7 @@ class Simulation {
       }
       walkers[i] = new Walker(xPos, yPos, agentSize, state);
     }
+    state = SimStates.RUNNING;
   }
 
   void tick() {
@@ -45,7 +46,8 @@ class Simulation {
   }
 
   void start() {
-    state = SimStates.RUNNING;
+    agentNum = int(agentNumTextBox.text);
+    this.setup();
   }
 
   void pause() {
@@ -54,7 +56,6 @@ class Simulation {
 
   void stop() {
     state = SimStates.STOPPED;
-    this.setup();
   }
 }
 

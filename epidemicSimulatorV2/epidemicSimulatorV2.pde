@@ -13,7 +13,7 @@ Random gen;
 
 // Textbox starter number of agents
 
-TextBox agents = new TextBox(860, 100, 125, 125, color(0), color(255));
+TextBox agentNumTextBox = new TextBox(860, 100, 125, 125, color(0), color(255));
 
 // Textbox starter number of infected
 TextBox infectats = new TextBox(1140, 100, 125, 125, color(0), color(255));
@@ -35,10 +35,10 @@ void setup() {
 
   gen = new Random();
 
+  agentNumTextBox.text = "400";
+
   MEAN = 3;
   STD_DEV = 1;
-  
-  sim.setup();
 }
 void draw() {
   // Non-interactive UI
@@ -98,9 +98,7 @@ void draw() {
   text ("Gràfic susceptibles i infectats", 750, 370);
 
   // Written info in console
-  agents.render();
-
-  println(agents.text);
+  agentNumTextBox.render();
 
   infectats.render();
 
