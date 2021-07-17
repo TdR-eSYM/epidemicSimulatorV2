@@ -62,6 +62,7 @@ class Simulation {
   }
 
   void stop() {
+    if(state == SimStates.STOPPED) return; // Prevent "stopping" if the simulation is already stopped
     infectedNumTB.text = str(initialInf);
     suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;
