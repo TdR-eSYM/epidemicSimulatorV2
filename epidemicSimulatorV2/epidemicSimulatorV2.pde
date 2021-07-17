@@ -101,8 +101,9 @@ void draw() {
   suceptibleNumTB.render();
 
   infectedNumTB.render();
-
-  sim.agentNum = int(suceptibleNumTB.text) + int(infectedNumTB.text);
+  
+  sim.infected = int(infectedNumTB.text);
+  sim.agentNum = int(suceptibleNumTB.text) + sim.infected;
   agentsNumTB.text = str(sim.agentNum);
   agentsNumTB.render();
 }

@@ -13,15 +13,17 @@ class Simulation {
 
   void setup() {
     walkers = new Walker[agentNum];
-    for (int i = 0; i < agentNum; i++) {
-      int state = AgentStates.SUSCEPTIBLE;
+    for (int i = 0; i < agentNum-infected; i++) {
       float xPos = random(0, 720);
       float yPos = random(0, height);
-
-      if (random(1) < startInfProb) {
-        state = AgentStates.INFECTED;
-      }
-      walkers[i] = new Walker(xPos, yPos, agentSize, state);
+      
+      walkers[i] = new Walker(xPos, yPos, agentSize, AgentStates.SUSCEPTIBLE);
+    }
+    for (int i = 0; i < infected; i++) {
+      float xPos = random(0, 720);
+      float yPos = random(0, height);
+      
+      walkers[i+(agentNum-infected)] = new Walker(xPos, yPos, agentSize, AgentStates.INFECTED);
     }
     state = SimStates.RUNNING;
   }
