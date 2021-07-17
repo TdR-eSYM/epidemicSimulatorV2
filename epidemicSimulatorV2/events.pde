@@ -14,6 +14,9 @@ void buttonPressed(String name) {
 
 void mouseClicked() {
   //Textbox number of infected & agents
+  
+  //Won't execute if sim is running
+  if(sim.state != SimStates.STOPPED) return;
   for (int i = 0; i < textBoxes.length; i++) {
     if (textBoxes[i].blocked) continue;
     if (mouseY > textBoxes[i].y && mouseY < textBoxes[i].y + textBoxes[i].sizey && mouseX > textBoxes[i].x && mouseX < textBoxes[i].x + textBoxes[i].sizex) {

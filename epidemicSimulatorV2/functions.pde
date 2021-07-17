@@ -12,6 +12,12 @@ void frameRateShow() {
   text("FPS: " + fps, 740, 30);
 }
 
+void unfocusAllTexboxes(TextBox[] t){
+ for (int i = 0; i < t.length; i++){
+   t[i].focus = false;
+ }
+}
+
 // https://forum.processing.org/two/discussion/27473/paste-and-copy-text
 String GetTextFromClipboard () {
   String text = (String) GetFromClipboard(DataFlavor.stringFlavor);

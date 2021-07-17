@@ -48,7 +48,7 @@ class Simulation {
   }
 
   void start() {
-    //agentNum = int(a.text);
+    unfocusAllTexboxes(textBoxes);
     this.setup();
   }
 
