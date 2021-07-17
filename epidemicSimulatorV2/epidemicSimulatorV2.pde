@@ -29,8 +29,8 @@ Button pause = new Button ("pause", 250, 199, 10, 940, 60, 120, 30);
 
 Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30);
 
-Graph infected = new Graph (740, 380, 520, 320, color(200, 0, 0, 160));
-Graph susceptible = new Graph (740, 380, 520, 320, color(0, 200, 0, 160));
+Graph infected = new Graph (740, 380, 520, 320, color(200, 0, 0, 160), true);
+Graph susceptible = new Graph (740, 380, 520, 320, color(0, 200, 0, 160), true);
 
 void setup() {
   size(1280, 720);
@@ -38,7 +38,8 @@ void setup() {
   gen = new Random();
 
   suceptibleNumTB.text = "400";
-
+  infectedNumTB.text = "20";
+  
   MEAN = 3;
   STD_DEV = 1;
 }

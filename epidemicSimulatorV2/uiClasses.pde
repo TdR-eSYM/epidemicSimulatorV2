@@ -6,8 +6,9 @@ class Graph {
   int [] gData;
   int index;
   color c;
+  boolean fill;
 
-  Graph (int x, int y, int sizex, int sizey, color c) {
+  Graph (int x, int y, int sizex, int sizey, color c, boolean fill) {
     this.x = x;
     this.y = y;
     this.sizex = sizex;
@@ -15,13 +16,18 @@ class Graph {
     this.index = x;
     this.gData = new int[sizex + x];
     this.c = c;
+    this.fill = fill;
   }
   void render() {
     if (sim.state != SimStates.STOPPED) {
       stroke (c);
       for (int i = 0; i < (sizex + x); i++) {
         if (gData[i] == 0) continue;
-        line(i, gData[i], i, (sizey + y));
+        if(fill){
+          line(i, gData[i], i, (sizey + y));
+        }else{
+          point(i, gData[i]);
+        }
       }
       stroke(0);
     }
