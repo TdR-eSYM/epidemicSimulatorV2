@@ -98,7 +98,7 @@ void draw() {
   text ("Start", 1160, 82);
 
   textSize (15);
-  text ("Gràfic susceptibles i infectats.", 750, 370);
+  text ("Gràfic susceptibles i infectats:", 750, 370);
   // Written info in console
   suceptibleNumTB.render();
 

@@ -53,6 +53,8 @@ class Simulation {
   }
 
   void pause() {
+    //We cannot pause if the simulation is stopped
+    if(state == SimStates.STOPPED) return;
     state = SimStates.PAUSED;
   }
 
