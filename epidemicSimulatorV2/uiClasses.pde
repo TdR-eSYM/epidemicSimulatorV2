@@ -92,7 +92,7 @@ class TextBox {
 
   void render() {
     if (focus) {
-      fill(240);
+      fill(100);
     } else {
       fill(backColor);
     }

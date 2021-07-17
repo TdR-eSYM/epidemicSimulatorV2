@@ -14,35 +14,30 @@ void buttonPressed(String name) {
 
 void mouseClicked() {
   //Textbox number of infected & agents
-  if (mouseY > agentNumTextBox.y && mouseY < agentNumTextBox.y + agentNumTextBox.sizey && mouseX > agentNumTextBox.x && mouseX < agentNumTextBox.x + agentNumTextBox.sizex) {
-    agentNumTextBox.focus = true;
+  if (mouseY > suceptibleNumTB.y && mouseY < suceptibleNumTB.y + suceptibleNumTB.sizey && mouseX > suceptibleNumTB.x && mouseX < suceptibleNumTB.x + suceptibleNumTB.sizex) {
+    suceptibleNumTB.focus = true;
   } else {
-    agentNumTextBox.focus = false;
+    suceptibleNumTB.focus = false;
   }
-  if (mouseY > infectats.y && mouseY < infectats.y + infectats.sizey && mouseX > infectats.x && mouseX < infectats.x + infectats.sizex) {
-    infectats.focus = true;
+  if (mouseY > infectedNumTB.y && mouseY < infectedNumTB.y + infectedNumTB.sizey && mouseX > infectedNumTB.x && mouseX < infectedNumTB.x + infectedNumTB.sizex) {
+    infectedNumTB.focus = true;
   } else {
-    infectats.focus = false;
-  }
-  if (mouseY > vacunacio.y && mouseY < vacunacio.y + vacunacio.sizey && mouseX > vacunacio.x && mouseX < vacunacio.x + vacunacio.sizex) {
-    vacunacio.focus = true;
-  } else {
-    vacunacio.focus = false;
+    infectedNumTB.focus = false;
   }
 }
 
 void keyPressed() {
   int n;
-  if (agentNumTextBox.focus) {
+  if (suceptibleNumTB.focus) {
     if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
       //Ctrl-v
-      agentNumTextBox.text += GetTextFromClipboard();
+      suceptibleNumTB.text += GetTextFromClipboard();
       return;
     }
     switch(keyCode) {
     case 8:
-      if (agentNumTextBox.text.length() != 0) {
-        agentNumTextBox.text = agentNumTextBox.text.substring(0, agentNumTextBox.text.length()-1);
+      if (suceptibleNumTB.text.length() != 0) {
+        suceptibleNumTB.text = suceptibleNumTB.text.substring(0, suceptibleNumTB.text.length()-1);
       }
       break;
 
@@ -50,21 +45,21 @@ void keyPressed() {
       n = int(key);  
       n = n - 48;
       if (n >= 0 && n <= 9) {
-        if (keyCode > 31) agentNumTextBox.text += key;
+        if (keyCode > 31) suceptibleNumTB.text += key;
         break;
       }
     }
   }
-  if (infectats.focus) {
+  if (infectedNumTB.focus) {
     if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
       //Ctrl-v
-      infectats.text += GetTextFromClipboard();
+      infectedNumTB.text += GetTextFromClipboard();
       return;
     }
     switch(keyCode) {
     case 8:
-      if (infectats.text.length() != 0) {
-        infectats.text = infectats.text.substring(0, infectats.text.length()-1);
+      if (infectedNumTB.text.length() != 0) {
+        infectedNumTB.text = infectedNumTB.text.substring(0, infectedNumTB.text.length()-1);
       }
       break;
 
@@ -72,29 +67,7 @@ void keyPressed() {
       n = int(key);  
       n = n - 48;
       if (n >= 0 && n <= 9) {
-        if (keyCode > 31) infectats.text += key;
-        break;
-      }
-    }
-  }
-  if (vacunacio.focus) {
-    if (key == '') { // I know, this is like the most hackiest thing ever and idk if will work in other os than windows. Let's just leave it for now ;)
-      //Ctrl-v
-      vacunacio.text += GetTextFromClipboard();
-      return;
-    }
-    switch(keyCode) {
-    case 8:
-      if (vacunacio.text.length() != 0) {
-        vacunacio.text = vacunacio.text.substring(0, vacunacio.text.length()-1);
-      }
-      break;
-
-    default:
-      n = int(key);  
-      n = n - 48;
-      if (n >= 0 && n <= 9) {
-        if (keyCode > 31) vacunacio.text += key;
+        if (keyCode > 31) infectedNumTB.text += key;
         break;
       }
     }

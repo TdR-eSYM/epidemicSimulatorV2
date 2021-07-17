@@ -46,7 +46,7 @@ class Simulation {
   }
 
   void start() {
-    agentNum = int(agentNumTextBox.text);
+    //agentNum = int(a.text);
     this.setup();
   }
 

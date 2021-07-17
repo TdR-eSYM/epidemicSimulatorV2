@@ -1,11 +1,11 @@
 void frameRateShow() {
   int fps = round(frameRate);
   if (fps <= 30 && fps > 15) {
-    fill(205, 205, 0);
+    fill(235, 235, 0);
   } else if (fps <= 15) {
     fill(255, 0, 0);
   } else {
-    fill(0, 205, 0);
+    fill(0, 225, 0);
   }
 
   textSize(18);

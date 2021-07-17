@@ -13,17 +13,17 @@ Random gen;
 
 // Textbox starter number of agents
 
-TextBox agentNumTextBox = new TextBox(860, 100, 125, 125, color(0), color(255));
+TextBox suceptibleNumTB = new TextBox(760, 140, 125, 125, color(255), color(120));
 
 // Textbox starter number of infected
-TextBox infectats = new TextBox(1140, 100, 125, 125, color(0), color(255));
+TextBox infectedNumTB = new TextBox(930, 140, 125, 125, color(255), color(120));
 
 // Textbox time where vacunation starts
-TextBox vacunacio = new TextBox(1045, 223, 125, 125, color(0), color(255));
+TextBox agentsNumTB = new TextBox(1095, 140, 125, 125, color(255), color(120));
 
 Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30);
 
-Button pause = new Button ("pause", 255, 255, 0, 940, 60, 120, 30);
+Button pause = new Button ("pause", 250, 199, 10, 940, 60, 120, 30);
 
 Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30);
 
@@ -35,7 +35,7 @@ void setup() {
 
   gen = new Random();
 
-  agentNumTextBox.text = "400";
+  suceptibleNumTB.text = "400";
 
   MEAN = 3;
   STD_DEV = 1;
@@ -45,11 +45,16 @@ void draw() {
   background(255);
 
   sim.tick();
-
-  fill (186, 230, 255);
-  rect (720, 0, 560, 720);
+  
+  stroke(30);
+  fill(62);
+  rect(720, 0, 560, 720);
+  fill(82);
+  rect(730, 100, 540, 250);
+  stroke(200);
   line (720, 45, 1280, 45);
-
+  stroke(30);
+  
   //Graphs background
   fill (255);
   rect (740, 380, 520, 320);
@@ -70,23 +75,19 @@ void draw() {
   
   frameRateShow();
   
-  fill(0);
+  fill(255);
   textSize (20);
   text ("Epidemic simulator V2", 890, 30);
-
-  text ("Nº d'agents:", 740, 125);
-
-  text ("Nº d'infectats:", 1000, 125);
-
-  text ("Nº de morts:", 740, 165);
-
-  text ("Nº d'infectats:", 1000, 165);
   
-  text ("Nº de recuperats:", 740, 205);
+  textSize(16);
+
+  text ("Susceptibles:", 760, 125);
+
+  text ("Infectats:", 950, 125);
   
-  text ("Començament de la vacunació:", 740, 245);
-  
-  text ("Nº de vacunats:", 740, 285);
+  text ("Agents totals:", 1100, 125);
+
+  textSize (18);
 
   text ("Stop", 800, 82);
 
@@ -95,17 +96,13 @@ void draw() {
   text ("Start", 1160, 82);
 
   textSize (15);
-  text ("Gràfic susceptibles i infectats", 750, 370);
-
+  text ("Gràfic susceptibles i infectedNumTB", 750, 370);
   // Written info in console
-  agentNumTextBox.render();
+  suceptibleNumTB.render();
 
-  infectats.render();
+  infectedNumTB.render();
 
-  println(infectats.text);
-  
-  vacunacio.render();
-  
-  println(vacunacio.text);
-  
+  sim.agentNum = int(suceptibleNumTB.text) + int(infectedNumTB.text);
+  agentsNumTB.text = str(sim.agentNum);
+  agentsNumTB.render();
 }
