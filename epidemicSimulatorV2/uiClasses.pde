@@ -80,14 +80,16 @@ class TextBox {
   String text = "";
   boolean focus = false;
   boolean release = true;
+  boolean blocked = false;
   color foreColor, backColor;
-  TextBox(int x, int y, int sizex, int sizey, color foreColor, color backColor) {
+  TextBox(int x, int y, int sizex, int sizey, color foreColor, color backColor, boolean blocked) {
     this.x = x;
     this.y = y;
     this.sizey = sizey;
     this.sizex = sizex;
     this.foreColor = foreColor;
     this.backColor = backColor;
+    this.blocked = blocked;
   }
 
   void render() {

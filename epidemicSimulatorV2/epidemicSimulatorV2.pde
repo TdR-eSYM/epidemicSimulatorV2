@@ -13,13 +13,15 @@ Random gen;
 
 // Textbox starter number of agents
 
-TextBox suceptibleNumTB = new TextBox(760, 140, 125, 125, color(255), color(120));
+TextBox suceptibleNumTB = new TextBox(760, 140, 125, 125, color(255), color(120), false);
 
 // Textbox starter number of infected
-TextBox infectedNumTB = new TextBox(930, 140, 125, 125, color(255), color(120));
+TextBox infectedNumTB = new TextBox(930, 140, 125, 125, color(255), color(120), false);
 
 // Textbox time where vacunation starts
-TextBox agentsNumTB = new TextBox(1095, 140, 125, 125, color(255), color(120));
+TextBox agentsNumTB = new TextBox(1095, 140, 125, 125, color(255), color(120), true);
+
+TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB};
 
 Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30);
 

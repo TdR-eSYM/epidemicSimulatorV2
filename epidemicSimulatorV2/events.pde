@@ -14,15 +14,12 @@ void buttonPressed(String name) {
 
 void mouseClicked() {
   //Textbox number of infected & agents
-  if (mouseY > suceptibleNumTB.y && mouseY < suceptibleNumTB.y + suceptibleNumTB.sizey && mouseX > suceptibleNumTB.x && mouseX < suceptibleNumTB.x + suceptibleNumTB.sizex) {
-    suceptibleNumTB.focus = true;
-  } else {
-    suceptibleNumTB.focus = false;
-  }
-  if (mouseY > infectedNumTB.y && mouseY < infectedNumTB.y + infectedNumTB.sizey && mouseX > infectedNumTB.x && mouseX < infectedNumTB.x + infectedNumTB.sizex) {
-    infectedNumTB.focus = true;
-  } else {
-    infectedNumTB.focus = false;
+  for (int i = 0; i < textBoxes.length; i++) {
+    if (mouseY > textBoxes[i].y && mouseY < textBoxes[i].y + textBoxes[i].sizey && mouseX > textBoxes[i].x && mouseX < textBoxes[i].x + textBoxes[i].sizex) {
+      textBoxes[i].focus = true;
+    } else {
+      textBoxes[i].focus = false;
+    }
   }
 }
 
