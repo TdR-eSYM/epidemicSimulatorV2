@@ -5,7 +5,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
-Simulation sim = new Simulation(400, 10, 0.01);
+Simulation sim = new Simulation(400, 10, 20);
 
 float MEAN, STD_DEV;
 
@@ -47,7 +47,7 @@ void draw() {
   background(255);
 
   sim.tick();
-  
+
   stroke(30);
   fill(62);
   rect(720, 0, 560, 720);
@@ -56,7 +56,7 @@ void draw() {
   stroke(200);
   line (720, 45, 1280, 45);
   stroke(30);
-  
+
   //Graphs background
   fill (255);
   rect (740, 380, 520, 320);
@@ -74,19 +74,19 @@ void draw() {
 
   susceptible.render();
   infected.render();
-  
+
   frameRateShow();
-  
+
   fill(255);
   textSize (20);
   text ("Epidemic simulator V2", 890, 30);
-  
+
   textSize(16);
 
   text ("Susceptibles:", 760, 125);
 
   text ("Infectats:", 950, 125);
-  
+
   text ("Agents totals:", 1100, 125);
 
   textSize (18);
@@ -103,9 +103,15 @@ void draw() {
   suceptibleNumTB.render();
 
   infectedNumTB.render();
+
+  if (sim.state == SimStates.STOPPED) {
+    sim.infected = int(infectedNumTB.text);
+    sim.agentNum = int(suceptibleNumTB.text) + sim.infected;
+  }else{
+    infectedNumTB.text = str(sim.infected);
+    suceptibleNumTB.text = str(sim.agentNum - sim.infected - sim.immune - sim.dead);
+  }
   
-  sim.infected = int(infectedNumTB.text);
-  sim.agentNum = int(suceptibleNumTB.text) + sim.infected;
   agentsNumTB.text = str(sim.agentNum);
   agentsNumTB.render();
 }

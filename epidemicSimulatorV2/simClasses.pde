@@ -1,13 +1,13 @@
 class Simulation {
   int state;
   Walker[] walkers;
-  int agentNum, agentSize, infected, dead, immune;
+  int agentNum, agentSize, infected, dead, immune, initialInf;
   float startInfProb;
 
-  Simulation(int agentNum, int agentSize, float startInfProb) {
+  Simulation(int agentNum, int agentSize, int initialInf) {
     this.agentNum = agentNum;
     this.agentSize = agentSize;
-    this.startInfProb = startInfProb;
+    this.initialInf = initialInf;
     state = SimStates.STOPPED;
   }
 
@@ -16,29 +16,32 @@ class Simulation {
     for (int i = 0; i < agentNum-infected; i++) {
       float xPos = random(0, 720);
       float yPos = random(0, height);
-      
+
       walkers[i] = new Walker(xPos, yPos, agentSize, AgentStates.SUSCEPTIBLE);
     }
     for (int i = 0; i < infected; i++) {
       float xPos = random(0, 720);
       float yPos = random(0, height);
-      
+
       walkers[i+(agentNum-infected)] = new Walker(xPos, yPos, agentSize, AgentStates.INFECTED);
     }
+    initialInf = infected;
     state = SimStates.RUNNING;
   }
 
   void tick() {
-    if(state == SimStates.STOPPED) return;
-    infected = 0;
-    dead = 0;
-    immune = 0;
+    if (state == SimStates.STOPPED) return;
+    if (state == SimStates.RUNNING) {
+      infected = 0;
+      dead = 0;
+      immune = 0;
+    }
     for (int i = 0; i < agentNum; i++) {
       if (state != SimStates.PAUSED) {
         if (walkers[i].state == AgentStates.INFECTED) infected++;
         if (walkers[i].state == AgentStates.DEAD) dead++;
         if (walkers[i].state == AgentStates.RECOVERED) immune++;
-        
+
         walkers[i].step();
         walkers[i].outcome(0.01, 0.001);
         walkers[i].infect(1/frameRate);
@@ -54,11 +57,13 @@ class Simulation {
 
   void pause() {
     //We cannot pause if the simulation is stopped
-    if(state == SimStates.STOPPED) return;
+    if (state == SimStates.STOPPED) return;
     state = SimStates.PAUSED;
   }
 
   void stop() {
+    infectedNumTB.text = str(initialInf);
+    suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;
   }
 }
