@@ -51,14 +51,17 @@ class Simulation {
   }
 
   void start() {
+    if(state != SimStates.STOPPED) return;
     unfocusAllTexboxes(textBoxes);
     this.setup();
   }
 
   void pause() {
-    //We cannot pause if the simulation is stopped
-    if (state == SimStates.STOPPED) return;
-    state = SimStates.PAUSED;
+    if(state == SimStates.RUNNING){
+      state = SimStates.PAUSED;
+    } else if (state == SimStates.PAUSED){
+      state = SimStates.RUNNING;
+    }
   }
 
   void stop() {
@@ -145,6 +148,7 @@ class Walker {
 
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)
   void render() {
+    stroke(50);
     if (state == AgentStates.INFECTED) {
       fill(255, 0, 0);
     } else if (state == AgentStates.DEAD) {

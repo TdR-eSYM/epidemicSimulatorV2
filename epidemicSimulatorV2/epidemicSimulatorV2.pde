@@ -111,10 +111,17 @@ void draw() {
 
   infectedNumTB.render();
 
+  if(sim.state == SimStates.PAUSED){
+    fill(0, 50);
+    noStroke();
+    rect(width/4.5, height/3.2, 40, 200);
+    rect(width/3.5, height/3.2, 40, 200);
+  }
+
   if (sim.state == SimStates.STOPPED) {
     sim.infected = int(infectedNumTB.text);
     sim.agentNum = int(suceptibleNumTB.text) + sim.infected;
-  }else{
+  } else {
     infectedNumTB.text = str(sim.infected);
     suceptibleNumTB.text = str(sim.agentNum - sim.infected - sim.immune - sim.dead);
   }
