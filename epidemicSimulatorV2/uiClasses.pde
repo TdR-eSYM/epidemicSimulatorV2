@@ -34,7 +34,7 @@ class Graph {
   }
 
   void update(int data, float agents) {
-    if (index == sizex + x - 1) {
+    if (index == sizex + x - 1 || sim.state == SimStates.STOPPED)  {
       clean();
     }
     if (sim.state == SimStates.RUNNING) {
