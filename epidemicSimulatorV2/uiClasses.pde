@@ -59,6 +59,8 @@ class Button {
   int y;
   int sizex;
   int sizey;
+  boolean pressed = false;
+  
   Button (String name, int r, int g, int b, int x, int y, int sizex, int sizey) {
     this.name = name;
     this.r = r;
@@ -71,9 +73,10 @@ class Button {
   }
   void render() {
 
-    if (mousePressed && ((mouseY > y && mouseY < y + sizey) && (mouseX > x && mouseX < x + sizex))) {
+    if (pressed) {
       fill ( r - 20, g - 20, b);
       buttonPressed(name);
+      pressed = false;
     } else { 
       fill (r, g, b);
     }

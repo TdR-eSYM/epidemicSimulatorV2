@@ -29,6 +29,8 @@ Button pause = new Button ("pause", 250, 199, 10, 940, 60, 120, 30);
 
 Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30);
 
+Button[] buttons = {stop, pause, start};
+
 Graph infected = new Graph (740, 380, 520, 320, color(200, 0, 0, 160), true);
 Graph susceptible = new Graph (740, 380, 520, 320, color(0, 200, 0, 160), true);
 Graph recovered = new Graph (740, 380, 520, 320, color(0, 0, 255), false);
