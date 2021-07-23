@@ -76,7 +76,7 @@ class Button {
 
     if (pressed) {
       fill ( r - 20, g - 20, b);
-      buttonPressed(name);
+      if(!blocked) buttonPressed(name);
       pressed = false;
     } else { 
       fill (r, g, b);

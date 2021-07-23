@@ -51,8 +51,10 @@ class Simulation {
   }
 
   void start() {
-    if(state != SimStates.STOPPED) return;
     unfocusAllTexboxes(textBoxes);
+    start.blocked = true;
+    pause.blocked = false;
+    stop.blocked = false;
     this.setup();
   }
 
@@ -65,7 +67,9 @@ class Simulation {
   }
 
   void stop() {
-    if(state == SimStates.STOPPED) return; // Prevent "stopping" if the simulation is already stopped
+    start.blocked = false;
+    pause.blocked = true;
+    stop.blocked = true;
     infectedNumTB.text = str(initialInf);
     suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;

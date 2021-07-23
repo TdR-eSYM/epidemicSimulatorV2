@@ -23,11 +23,11 @@ TextBox agentsNumTB = new TextBox(1095, 140, 125, 125, color(255), color(120), t
 
 TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB};
 
-Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30, true);
+Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
 
-Button pause = new Button ("pause", 250, 199, 10, 940, 60, 120, 30, true);
+Button pause = new Button ("pause", 220, 169, 10, 940, 60, 120, 30, true);
 
-Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30, false);
+Button start = new Button ("start", 0, 225, 0, 1120, 60, 120, 30, false);
 
 Button[] buttons = {stop, pause, start};
 
