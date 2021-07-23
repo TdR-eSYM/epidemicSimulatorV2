@@ -23,11 +23,11 @@ TextBox agentsNumTB = new TextBox(1095, 140, 125, 125, color(255), color(120), t
 
 TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB};
 
-Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30);
+Button stop = new Button ("stop", 255, 0, 0, 760, 60, 120, 30, true);
 
-Button pause = new Button ("pause", 250, 199, 10, 940, 60, 120, 30);
+Button pause = new Button ("pause", 250, 199, 10, 940, 60, 120, 30, true);
 
-Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30);
+Button start = new Button ("start", 0, 255, 0, 1120, 60, 120, 30, false);
 
 Button[] buttons = {stop, pause, start};
 
@@ -101,8 +101,12 @@ void draw() {
   textSize (18);
 
   text ("Stop", 800, 82);
-
-  text ("Pause", 974, 82);
+  
+  if(sim.state == SimStates.PAUSED){
+    text ("Unpause", 965, 82);
+  }else{
+    text ("Pause", 974, 82);
+  }
 
   text ("Start", 1160, 82);
 

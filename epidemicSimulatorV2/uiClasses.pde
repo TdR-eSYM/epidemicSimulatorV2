@@ -60,8 +60,8 @@ class Button {
   int sizex;
   int sizey;
   boolean pressed = false;
-  
-  Button (String name, int r, int g, int b, int x, int y, int sizex, int sizey) {
+  boolean blocked;
+  Button (String name, int r, int g, int b, int x, int y, int sizex, int sizey, boolean blocked) {
     this.name = name;
     this.r = r;
     this.g = g;
@@ -70,6 +70,7 @@ class Button {
     this.y = y;
     this.sizex = sizex;
     this.sizey = sizey;
+    this.blocked = blocked;
   }
   void render() {
 
@@ -80,6 +81,7 @@ class Button {
     } else { 
       fill (r, g, b);
     }
+    if(blocked) fill ( r - 40, g - 40, b);
     rect (x, y, sizex, sizey);
   }
 }
