@@ -60,7 +60,7 @@ class Simulation {
       immune = 0;
     }
     if (renderEngineCheck.pressed) {
-      if (renderLength*60 <= frameNum){
+      if (renderLength <= frameNum){
         this.stop();
         frameNum = 0;
       }

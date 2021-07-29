@@ -74,7 +74,6 @@ void exit() {
 void draw() {
   // Non-interactive UI
   background(255);
-
   sim.tick();
 
   stroke(30);
