@@ -9,6 +9,8 @@ void buttonPressed(String name) {
   case "start":
     sim.start();
     break;
+  case "engineSettings":
+    engineWindow.open = !engineWindow.open;
   }
 }
 
@@ -19,6 +21,13 @@ void mouseClicked() {
     //if (buttons[i].blocked) continue; IMPLEMENT THIS
     if (mouseY > buttons[i].y && mouseY < buttons[i].y + buttons[i].sizey && mouseX > buttons[i].x && mouseX < buttons[i].x + buttons[i].sizex) {
       buttons[i].pressed = true;
+    }
+  }
+  
+  for (int i = 0; i < checkboxes.length; i++) {
+    //if (buttons[i].blocked) continue; IMPLEMENT THIS
+    if (mouseY > checkboxes[i].y && mouseY < checkboxes[i].y + checkboxes[i].sizey && mouseX > checkboxes[i].x && mouseX < checkboxes[i].x + checkboxes[i].sizex) {
+      checkboxes[i].pressed = !checkboxes[i].pressed;
     }
   }
 

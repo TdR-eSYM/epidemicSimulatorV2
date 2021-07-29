@@ -1,4 +1,6 @@
 import java.util.Random;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
@@ -13,15 +15,17 @@ Random gen;
 
 // Textbox starter number of agents
 
-TextBox suceptibleNumTB = new TextBox(760, 140, 125, 125, color(255), color(120), false);
+TextBox suceptibleNumTB = new TextBox(760, 140, 125, 31, color(255), color(120), false);
 
 // Textbox starter number of infected
-TextBox infectedNumTB = new TextBox(930, 140, 125, 125, color(255), color(120), false);
+TextBox infectedNumTB = new TextBox(930, 140, 125, 31, color(255), color(120), false);
 
 // Textbox time where vacunation starts
-TextBox agentsNumTB = new TextBox(1095, 140, 125, 125, color(255), color(120), true);
+TextBox agentsNumTB = new TextBox(1095, 140, 125, 31, color(255), color(120), true);
 
-TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB};
+TextBox renderLenTB = new TextBox(760, 220, 125, 31, color(255), color(120), false);
+
+TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB};
 
 Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
 
@@ -29,24 +33,44 @@ Button pause = new Button ("pause", 220, 169, 10, 940, 60, 120, 30, true);
 
 Button start = new Button ("start", 0, 225, 0, 1120, 60, 120, 30, false);
 
-Button[] buttons = {stop, pause, start};
+Button walkerBtn = new Button ("walkerSettings", 0, 120, 200, 760, 300, 120, 30, false);
+Button engineBtn = new Button ("engineSettings", 105, 203, 50, 940, 300, 120, 30, false);
+
+Button[] buttons = {stop, pause, start, walkerBtn, engineBtn};
 
 Graph infected = new Graph (740, 380, 520, 320, color(200, 0, 0, 160), true);
 Graph susceptible = new Graph (740, 380, 520, 320, color(0, 200, 0, 160), true);
 Graph recovered = new Graph (740, 380, 520, 320, color(0, 0, 255), false);
 Graph dead = new Graph (740, 380, 520, 320, color(0, 0, 0), false);
 
+CheckBox renderEngineCheck = new CheckBox(740, 280, 20, 20, color(230), color(0, 230, 0), false);
+
+CheckBox[] checkboxes = {renderEngineCheck};
+
+Window engineWindow;
+
+JSONObject config;
+
 void setup() {
   size(1280, 720);
 
   gen = new Random();
-
-  suceptibleNumTB.text = "400";
-  infectedNumTB.text = "20";
   
+  loadConfig();
+  
+  engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
+  
+
   MEAN = 3;
   STD_DEV = 1;
 }
+
+void exit() {
+  //put code to run on exit here
+  super.exit();
+  saveConfig();
+}
+
 void draw() {
   // Non-interactive UI
   background(255);
@@ -74,16 +98,22 @@ void draw() {
 
   pause.render();
 
+  walkerBtn.render();
+
+  engineBtn.render();
+
+  //renderEngineCheck.render();
+
   infected.update(sim.infected, sim.agentNum);
   susceptible.update(sim.agentNum-sim.infected-sim.dead-sim.immune, sim.agentNum); // This is too long, calculate inside class
   recovered.update(sim.immune, sim.agentNum);
   dead.update(sim.dead, sim.agentNum);
-  
+
   susceptible.render();
   infected.render();
   recovered.render();
   dead.render();
-  
+
   frameRateShow();
 
   fill(255);
@@ -92,23 +122,32 @@ void draw() {
 
   textSize(16);
 
-  text ("Susceptibles:", 760, 125);
+  text ("Susceptible:", 770, 125);
 
-  text ("Infectats:", 950, 125);
+  text ("Infected:", 956, 125);
 
-  text ("Agents totals:", 1100, 125);
+  text ("Total agents:", 1106, 125);
+  
+  if(renderEngineCheck.pressed){
+    text ("Length:", 764, 212);
+    renderLenTB.render();
+  }
 
   textSize (18);
 
   text ("Stop", 800, 82);
-  
-  if(sim.state == SimStates.PAUSED){
+
+  if (sim.state == SimStates.PAUSED) {
     text ("Unpause", 965, 82);
-  }else{
+  } else {
     text ("Pause", 974, 82);
   }
 
   text ("Start", 1160, 82);
+
+  text ("Agents", 790, 322);
+
+  text ("Engine", 973, 322);
 
   textSize (15);
   text ("Gràfic susceptibles i infectats:", 750, 370);
@@ -117,7 +156,7 @@ void draw() {
 
   infectedNumTB.render();
 
-  if(sim.state == SimStates.PAUSED){
+  if (sim.state == SimStates.PAUSED) {
     fill(0, 50);
     noStroke();
     rect(width/4.5, height/3.2, 40, 200);
@@ -127,11 +166,23 @@ void draw() {
   if (sim.state == SimStates.STOPPED) {
     sim.infected = int(infectedNumTB.text);
     sim.agentNum = int(suceptibleNumTB.text) + sim.infected;
+    sim.renderLength = int(renderLenTB.text);
   } else {
     infectedNumTB.text = str(sim.infected);
     suceptibleNumTB.text = str(sim.agentNum - sim.infected - sim.immune - sim.dead);
   }
-  
+
   agentsNumTB.text = str(sim.agentNum);
   agentsNumTB.render();
+  
+  engineWindow.render();
+  
+  if(engineWindow.open){
+    int x = engineWindow.x;
+    int y = engineWindow.y;
+    text("Render Engine: ", x+20, y+60);
+    renderEngineCheck.x = x + 240;
+    renderEngineCheck.y = y + 44;
+    renderEngineCheck.render();
+  }
 }

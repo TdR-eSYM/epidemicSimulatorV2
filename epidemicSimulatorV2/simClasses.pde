@@ -3,6 +3,13 @@ class Simulation {
   Walker[] walkers;
   int agentNum, agentSize, infected, dead, immune, initialInf;
   float startInfProb;
+  
+  int renderLength = 0;
+  int dataOffset = 0;
+  int frameNum = 0;
+  
+  byte[] bakeData;
+  ByteBuffer simData;
 
   Simulation(int agentNum, int agentSize, int initialInf) {
     this.agentNum = agentNum;
@@ -12,18 +19,34 @@ class Simulation {
   }
 
   void setup() {
-    walkers = new Walker[agentNum];
-    for (int i = 0; i < agentNum-infected; i++) {
-      float xPos = random(0, 720);
-      float yPos = random(0, height);
+    if (renderEngineCheck.pressed) {
+      Process renderProc = launch("cd " + dataPath("RenderEngine/ && simRender.exe " + str(renderLength) + " " + str(agentNum)));
+      try {
+        renderProc.waitFor();
+      } 
+      catch (InterruptedException e) {
+        println(e);
+      }
+      if (renderProc.exitValue() != 0) {
+        println("An error has ocurred with the renderEngine - Nonzero exitcode");
+        return;
+      }
+      bakeData = loadBytes(dataPath("RenderEngine/export.sim"));
+      simData = ByteBuffer.wrap(bakeData).order(ByteOrder.LITTLE_ENDIAN);
+    } else {
+      walkers = new Walker[agentNum];
+      for (int i = 0; i < agentNum-infected; i++) {
+        float xPos = random(0, 720);
+        float yPos = random(0, height);
 
-      walkers[i] = new Walker(xPos, yPos, agentSize, AgentStates.SUSCEPTIBLE);
-    }
-    for (int i = 0; i < infected; i++) {
-      float xPos = random(0, 720);
-      float yPos = random(0, height);
+        walkers[i] = new Walker(xPos, yPos, agentSize, AgentStates.SUSCEPTIBLE);
+      }
+      for (int i = 0; i < infected; i++) {
+        float xPos = random(0, 720);
+        float yPos = random(0, height);
 
-      walkers[i+(agentNum-infected)] = new Walker(xPos, yPos, agentSize, AgentStates.INFECTED);
+        walkers[i+(agentNum-infected)] = new Walker(xPos, yPos, agentSize, AgentStates.INFECTED);
+      }
     }
     initialInf = infected;
     state = SimStates.RUNNING;
@@ -36,17 +59,38 @@ class Simulation {
       dead = 0;
       immune = 0;
     }
-    for (int i = 0; i < agentNum; i++) {
-      if (state != SimStates.PAUSED) {
-        if (walkers[i].state == AgentStates.INFECTED) infected++;
-        if (walkers[i].state == AgentStates.DEAD) dead++;
-        if (walkers[i].state == AgentStates.RECOVERED) immune++;
-
-        walkers[i].step();
-        walkers[i].outcome(0.01, 0.001);
-        walkers[i].infect(1/frameRate);
+    if (renderEngineCheck.pressed) {
+      if (renderLength*60 <= frameNum){
+        this.stop();
+        frameNum = 0;
       }
-      walkers[i].render();
+
+      // For every agent (walker)
+      for (int i = 0; i < agentNum; i++) {
+        float x = simData.getFloat(dataOffset);
+        float y = simData.getFloat(dataOffset+4);
+        
+        fill(0, 255, 0);
+        circle(x, y, agentSize);
+        dataOffset += 8;
+        /*if (walkers[i].inf) infected++;
+         if (walkers[i].dead) dead++;
+         if (walkers[i].immune) immune++;*/
+      }
+      frameNum++;
+    } else {
+      for (int i = 0; i < agentNum; i++) {
+        if (state != SimStates.PAUSED) {
+          if (walkers[i].state == AgentStates.INFECTED) infected++;
+          if (walkers[i].state == AgentStates.DEAD) dead++;
+          if (walkers[i].state == AgentStates.RECOVERED) immune++;
+
+          walkers[i].step();
+          walkers[i].outcome(0.01, 0.001);
+          walkers[i].infect(1/frameRate);
+        }
+        walkers[i].render();
+      }
     }
   }
 
@@ -59,9 +103,9 @@ class Simulation {
   }
 
   void pause() {
-    if(state == SimStates.RUNNING){
+    if (state == SimStates.RUNNING) {
       state = SimStates.PAUSED;
-    } else if (state == SimStates.PAUSED){
+    } else if (state == SimStates.PAUSED) {
       state = SimStates.RUNNING;
     }
   }

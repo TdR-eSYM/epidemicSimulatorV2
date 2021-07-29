@@ -50,6 +50,34 @@ class Graph {
   }
 }
 
+class CheckBox {
+  int x, y, r, g, b;
+  int sizex;
+  int sizey;
+  boolean pressed = false;
+  boolean blocked;
+  color unPressedColor, pressedColor;
+  CheckBox (int x, int y, int sizex, int sizey, color unPressedColor, color pressedColor, boolean blocked) {
+    this.x = x;
+    this.y = y;
+    this.sizex = sizex;
+    this.sizey = sizey;
+    this.unPressedColor = unPressedColor;
+    this.pressedColor = pressedColor;
+    this.blocked = blocked;
+  }
+  void render() {
+
+    if (pressed) {
+      fill (pressedColor);
+    } else { 
+      fill (unPressedColor);
+    }
+    if(blocked) fill (150);
+    rect (x, y, sizex, sizey);
+  }
+}
+
 class Button {
   String name;
   int r;
@@ -86,6 +114,33 @@ class Button {
   }
 }
 
+class Window {
+  int x, y, sizex, sizey;
+  String title;
+  color backColor, barColor;
+  boolean open = false;
+  Window(String title, int x, int y, int sizex, int sizey, color backColor, color barColor){
+    this.title = title;
+    this.x = x;
+    this.y = y;
+    this.sizex = sizex;
+    this.sizey = sizey;
+    this.backColor = backColor;
+    this.barColor = barColor;
+  }
+  
+  void render(){
+    if(!open) return;
+    fill(backColor);
+    rect(x, y, sizex, sizey);
+    fill(barColor);
+    rect(x, y, sizex, 30);
+    fill(255);
+    textSize(6*3);
+    text(title, (x+sizex/2)-(4.5*title.chars().count()), y+22);
+  }
+}
+
 class TextBox {
   int x, y, sizex, sizey;
   String text = "";
@@ -109,10 +164,10 @@ class TextBox {
     } else {
       fill(backColor);
     }
-    rect(x, y, sizex, sizey/4);
+    rect(x, y, sizex, sizey);
 
     fill(foreColor);
-    textSize(sizey/5);
-    text(text, x + 7, y + sizey/5);
+    textSize(25);
+    text(text, x + 7, y + 25);
   }
 }

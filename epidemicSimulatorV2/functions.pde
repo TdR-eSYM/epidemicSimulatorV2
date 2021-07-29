@@ -1,3 +1,27 @@
+void loadConfig() {
+  try {
+    config = loadJSONObject(dataPath("settings.json"));
+    renderEngineCheck.pressed = config.getBoolean("renderEngine");
+    suceptibleNumTB.text = config.getString("susceptibleNum");
+    infectedNumTB.text = config.getString("infectedNum");
+    renderLenTB.text = config.getString("renderLen");
+  } 
+  catch (NullPointerException e) {
+    config = new JSONObject();
+    suceptibleNumTB.text = "400";
+    infectedNumTB.text = "20";
+    renderLenTB.text = "10";
+  }
+}
+
+void saveConfig() {
+  config.setBoolean("renderEngine", renderEngineCheck.pressed);
+  config.setString("susceptibleNum", suceptibleNumTB.text);
+  config.setString("infectedNum", infectedNumTB.text);
+  config.setString("renderLen", renderLenTB.text);
+  saveJSONObject(config, dataPath("settings.json"));
+}
+
 void frameRateShow() {
   int fps = round(frameRate);
   if (fps <= 30 && fps > 15) {
@@ -12,10 +36,10 @@ void frameRateShow() {
   text("FPS: " + fps, 740, 30);
 }
 
-void unfocusAllTexboxes(TextBox[] t){
- for (int i = 0; i < t.length; i++){
-   t[i].focus = false;
- }
+void unfocusAllTexboxes(TextBox[] t) {
+  for (int i = 0; i < t.length; i++) {
+    t[i].focus = false;
+  }
 }
 
 // https://forum.processing.org/two/discussion/27473/paste-and-copy-text
