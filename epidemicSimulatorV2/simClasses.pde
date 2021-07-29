@@ -7,6 +7,7 @@ class Simulation {
   int renderLength = 0;
   int dataOffset = 0;
   int frameNum = 0;
+  int startTime = 0;
   
   byte[] bakeData;
   ByteBuffer simData;
@@ -50,6 +51,7 @@ class Simulation {
     }
     initialInf = infected;
     state = SimStates.RUNNING;
+    startTime = millis();
   }
 
   void tick() {
@@ -63,6 +65,7 @@ class Simulation {
       if (renderLength <= frameNum){
         this.stop();
         frameNum = 0;
+        dataOffset = 0;
       }
 
       // For every agent (walker)

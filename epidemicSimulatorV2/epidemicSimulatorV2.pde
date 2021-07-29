@@ -130,6 +130,10 @@ void draw() {
   if(renderEngineCheck.pressed){
     text ("Length:", 764, 212);
     renderLenTB.render();
+    textSize(18);
+    if (true) text("T: " + sim.frameNum + "/" + renderLenTB.text + " f", 1140, 30);
+  }else {
+    if (sim.state == SimStates.RUNNING) text("T: " + int((millis() - sim.startTime)/1000) + " s", 740, 30);
   }
 
   textSize (18);
