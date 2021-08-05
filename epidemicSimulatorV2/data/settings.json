@@ -1,0 +1,7 @@
+{
+  "renderEngine": false,
+  "disableGraphs": true,
+  "susceptibleNum": "400",
+  "renderLen": "10",
+  "infectedNum": "20"
+}

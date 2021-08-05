@@ -44,8 +44,9 @@ Graph recovered = new Graph (740, 380, 520, 320, color(0, 0, 255), false);
 Graph dead = new Graph (740, 380, 520, 320, color(0, 0, 0), false);
 
 CheckBox renderEngineCheck = new CheckBox(740, 280, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox graphsEngineCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 
-CheckBox[] checkboxes = {renderEngineCheck};
+CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck};
 
 Window engineWindow;
 
@@ -86,8 +87,16 @@ void draw() {
   stroke(30);
 
   //Graphs background
-  fill (255);
-  rect (740, 380, 520, 320);
+  if(!graphsEngineCheck.pressed){
+    fill(255);
+    rect (740, 380, 520, 320);
+  }else{
+    fill(80, 50, 50);
+    rect (740, 380, 520, 320);
+    
+    fill(250, 200, 200);
+    text("DISABLED", 700, 450);
+  }
 
   //Simulation drawing
 
@@ -100,18 +109,18 @@ void draw() {
   walkerBtn.render();
 
   engineBtn.render();
-
-  //renderEngineCheck.render();
-
-  infected.update(sim.infected, sim.agentNum);
-  susceptible.update(sim.agentNum-sim.infected-sim.dead-sim.immune, sim.agentNum); // This is too long, calculate inside class
-  recovered.update(sim.immune, sim.agentNum);
-  dead.update(sim.dead, sim.agentNum);
-
-  susceptible.render();
-  infected.render();
-  recovered.render();
-  dead.render();
+  
+  if(!graphsEngineCheck.pressed){
+    infected.update(sim.infected, sim.agentNum);
+    susceptible.update(sim.agentNum-sim.infected-sim.dead-sim.immune, sim.agentNum); // This is too long, calculate inside class
+    recovered.update(sim.immune, sim.agentNum);
+    dead.update(sim.dead, sim.agentNum);
+  
+    susceptible.render();
+    infected.render();
+    recovered.render();
+    dead.render();
+  }
 
   frameRateShow();
 
@@ -131,9 +140,9 @@ void draw() {
     text ("Length:", 764, 212);
     renderLenTB.render();
     textSize(18);
-    if (sim.state == SimStates.RUNNING) text("T: " + sim.frameNum + "/" + renderLenTB.text + " f", 1140, 30);
+    if (sim.state == SimStates.RUNNING) text("T: " + sim.frameNum + "/" + renderLenTB.text + " f", 1140, 29);
   }else {
-    if (sim.state == SimStates.RUNNING) text("T: " + int((millis() - sim.startTime)/1000) + " s", 1200, 30);
+    if (sim.state == SimStates.RUNNING) text("T: " + int((millis() - sim.startTime)/1000) + " s", 1200, 29);
   }
 
   textSize (18);
@@ -164,6 +173,7 @@ void draw() {
     noStroke();
     rect(width/4.5, height/3.2, 40, 200);
     rect(width/3.5, height/3.2, 40, 200);
+    stroke(30); // Restore stroke
   }
 
   if (sim.state == SimStates.STOPPED) {
@@ -186,6 +196,12 @@ void draw() {
     text("Render Engine: ", x+20, y+60);
     renderEngineCheck.x = x + 240;
     renderEngineCheck.y = y + 44;
+    
+    
+    text("Disable Graphs: ", x+20, y+98);
+    graphsEngineCheck.x = x + 240;
+    graphsEngineCheck.y = y + 82;
     renderEngineCheck.render();
+    graphsEngineCheck.render();
   }
 }

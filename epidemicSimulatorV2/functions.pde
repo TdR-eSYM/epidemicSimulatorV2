@@ -2,6 +2,7 @@ void loadConfig() {
   try {
     config = loadJSONObject(dataPath("settings.json"));
     renderEngineCheck.pressed = config.getBoolean("renderEngine");
+    graphsEngineCheck.pressed = config.getBoolean("disableGraphs");
     suceptibleNumTB.text = config.getString("susceptibleNum");
     infectedNumTB.text = config.getString("infectedNum");
     renderLenTB.text = config.getString("renderLen");
@@ -16,6 +17,7 @@ void loadConfig() {
 
 void saveConfig() {
   config.setBoolean("renderEngine", renderEngineCheck.pressed);
+  config.setBoolean("disableGraphs", graphsEngineCheck.pressed);
   config.setString("susceptibleNum", suceptibleNumTB.text);
   config.setString("infectedNum", infectedNumTB.text);
   config.setString("renderLen", renderLenTB.text);
