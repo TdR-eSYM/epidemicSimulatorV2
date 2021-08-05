@@ -25,7 +25,9 @@ TextBox agentsNumTB = new TextBox(1095, 140, 125, 31, color(255), color(120), tr
 
 TextBox renderLenTB = new TextBox(760, 220, 125, 31, color(255), color(120), false);
 
-TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB};
+TextBox agentSizeTB = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+
+TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB};
 
 Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
 
@@ -56,11 +58,11 @@ void setup() {
   size(1280, 720);
 
   gen = new Random();
-  
+
   loadConfig();
-  
+
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
-  
+
   agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 200, color(80), color(50));
   MEAN = 3;
   STD_DEV = 1;
@@ -87,13 +89,13 @@ void draw() {
   stroke(30);
 
   //Graphs background
-  if(!graphsEngineCheck.pressed){
+  if (!graphsEngineCheck.pressed) {
     fill(255);
     rect (740, 380, 520, 320);
-  }else{
+  } else {
     fill(80, 50, 50);
     rect (740, 380, 520, 320);
-    
+
     fill(130, 90, 90);
     textSize(40);
     text("DISABLED", 899, 540);
@@ -110,13 +112,13 @@ void draw() {
   walkerBtn.render();
 
   engineBtn.render();
-  
-  if(!graphsEngineCheck.pressed){
+
+  if (!graphsEngineCheck.pressed) {
     infected.update(sim.infected, sim.agentNum);
     susceptible.update(sim.agentNum-sim.infected-sim.dead-sim.immune, sim.agentNum); // This is too long, calculate inside class
     recovered.update(sim.immune, sim.agentNum);
     dead.update(sim.dead, sim.agentNum);
-  
+
     susceptible.render();
     infected.render();
     recovered.render();
@@ -136,13 +138,13 @@ void draw() {
   text ("Infected:", 956, 125);
 
   text ("Total agents:", 1106, 125);
-  
-  if(renderEngineCheck.pressed){
+
+  if (renderEngineCheck.pressed) {
     text ("Length:", 764, 212);
     renderLenTB.render();
     textSize(18);
     if (sim.state == SimStates.RUNNING) text("T: " + sim.frameNum + "/" + renderLenTB.text + " f", 1140, 29);
-  }else {
+  } else {
     if (sim.state == SimStates.RUNNING) text("T: " + int((millis() - sim.startTime)/1000) + " s", 1200, 29);
   }
 
@@ -188,26 +190,34 @@ void draw() {
 
   agentsNumTB.text = str(sim.agentNum);
   agentsNumTB.render();
-  
+
   engineWindow.render();
   agentsWindow.render();
-  
-  if(engineWindow.open){
+
+  if (engineWindow.open) {
     int x = engineWindow.x;
     int y = engineWindow.y;
     text("Render Engine: ", x+20, y+60);
     renderEngineCheck.x = x + 240;
     renderEngineCheck.y = y + 44;
-    
-    
+
+
     text("Disable Graphs: ", x+20, y+98);
     graphsEngineCheck.x = x + 240;
     graphsEngineCheck.y = y + 82;
     renderEngineCheck.render();
     graphsEngineCheck.render();
   }
-  
-  if(agentsWindow.open){
+
+  if (agentsWindow.open) {
+    int x = agentsWindow.x;
+    int y = agentsWindow.y;
     
+    text("Agent size: ", x+20, y+62);
+    agentSizeTB.x = x + 200;
+    agentSizeTB.y = y + 44;
+    agentSizeTB.render();
+    
+    sim.agentSize = int(agentSizeTB.text);
   }
 }

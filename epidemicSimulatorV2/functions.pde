@@ -6,12 +6,14 @@ void loadConfig() {
     suceptibleNumTB.text = config.getString("susceptibleNum");
     infectedNumTB.text = config.getString("infectedNum");
     renderLenTB.text = config.getString("renderLen");
+    agentSizeTB.text = config.getString("agentSize");
   } 
   catch (NullPointerException e) {
     config = new JSONObject();
     suceptibleNumTB.text = "400";
     infectedNumTB.text = "20";
     renderLenTB.text = "10";
+    agentSizeTB.text = "10";
   }
 }
 
@@ -21,6 +23,7 @@ void saveConfig() {
   config.setString("susceptibleNum", suceptibleNumTB.text);
   config.setString("infectedNum", infectedNumTB.text);
   config.setString("renderLen", renderLenTB.text);
+  config.setString("agentSize", agentSizeTB.text);
   saveJSONObject(config, dataPath("settings.json"));
 }
 

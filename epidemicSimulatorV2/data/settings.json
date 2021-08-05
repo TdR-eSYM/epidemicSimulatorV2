@@ -1,7 +1,8 @@
 {
   "renderEngine": false,
-  "disableGraphs": true,
-  "susceptibleNum": "400",
-  "renderLen": "400",
-  "infectedNum": "20"
+  "disableGraphs": false,
+  "susceptibleNum": "0",
+  "renderLen": "10",
+  "infectedNum": "225",
+  "agentSize": "15"
 }
