@@ -2,6 +2,6 @@
   "renderEngine": false,
   "disableGraphs": true,
   "susceptibleNum": "400",
-  "renderLen": "10",
+  "renderLen": "400",
   "infectedNum": "20"
 }

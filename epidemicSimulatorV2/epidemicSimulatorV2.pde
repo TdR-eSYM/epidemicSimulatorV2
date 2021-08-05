@@ -33,7 +33,7 @@ Button pause = new Button ("pause", 220, 169, 10, 940, 60, 120, 30, true);
 
 Button start = new Button ("start", 0, 225, 0, 1120, 60, 120, 30, false);
 
-Button walkerBtn = new Button ("walkerSettings", 0, 120, 200, 760, 300, 120, 30, false);
+Button walkerBtn = new Button ("agentSettings", 0, 120, 200, 760, 300, 120, 30, false);
 Button engineBtn = new Button ("engineSettings", 105, 203, 50, 940, 300, 120, 30, false);
 
 Button[] buttons = {stop, pause, start, walkerBtn, engineBtn};
@@ -48,7 +48,7 @@ CheckBox graphsEngineCheck = new CheckBox(740, 290, 20, 20, color(230), color(0,
 
 CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck};
 
-Window engineWindow;
+Window engineWindow, agentsWindow;
 
 JSONObject config;
 
@@ -61,7 +61,7 @@ void setup() {
   
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
   
-
+  agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 200, color(80), color(50));
   MEAN = 3;
   STD_DEV = 1;
 }
@@ -94,8 +94,9 @@ void draw() {
     fill(80, 50, 50);
     rect (740, 380, 520, 320);
     
-    fill(250, 200, 200);
-    text("DISABLED", 700, 450);
+    fill(130, 90, 90);
+    textSize(40);
+    text("DISABLED", 899, 540);
   }
 
   //Simulation drawing
@@ -189,6 +190,7 @@ void draw() {
   agentsNumTB.render();
   
   engineWindow.render();
+  agentsWindow.render();
   
   if(engineWindow.open){
     int x = engineWindow.x;
@@ -203,5 +205,9 @@ void draw() {
     graphsEngineCheck.y = y + 82;
     renderEngineCheck.render();
     graphsEngineCheck.render();
+  }
+  
+  if(agentsWindow.open){
+    
   }
 }

@@ -11,6 +11,10 @@ void buttonPressed(String name) {
     break;
   case "engineSettings":
     engineWindow.open = !engineWindow.open;
+    break;
+  case "agentSettings":
+    agentsWindow.open = !agentsWindow.open;
+    break;
   }
 }
 

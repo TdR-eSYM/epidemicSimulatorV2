@@ -3,12 +3,12 @@ class Simulation {
   Walker[] walkers;
   int agentNum, agentSize, infected, dead, immune, initialInf;
   float startInfProb;
-  
+
   int renderLength = 0;
   int dataOffset = 0;
   int frameNum = 0;
   int startTime = 0;
-  
+
   byte[] bakeData;
   ByteBuffer simData;
 
@@ -62,20 +62,20 @@ class Simulation {
       immune = 0;
     }
     if (renderEngineCheck.pressed) {
-      if (renderLength <= frameNum){
+      if (renderLength <= frameNum) {
         this.stop();
         frameNum = 0;
         dataOffset = 0;
       }
-
+      if (state == SimStates.PAUSED) return;
       // For every agent (walker)
       for (int i = 0; i < agentNum; i++) {
         float x = simData.getFloat(dataOffset);
         float y = simData.getFloat(dataOffset+4);
-        
+    
+        dataOffset += 8;
         fill(0, 255, 0);
         circle(x, y, agentSize);
-        dataOffset += 8;
         /*if (walkers[i].inf) infected++;
          if (walkers[i].dead) dead++;
          if (walkers[i].immune) immune++;*/
