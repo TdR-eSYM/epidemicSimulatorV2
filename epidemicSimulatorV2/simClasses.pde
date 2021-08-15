@@ -11,13 +11,18 @@ class Simulation {
 
   byte[] bakeData;
   ByteBuffer simData;
-
-  Simulation(int agentNum, int agentSize, int initialInf, int STD_DEV, int MEAN) {
+  
+  boolean gMovement;
+  int fixedSpeed;
+  int maxAngleChange;
+  
+  Simulation(int agentNum, int agentSize, int initialInf, int STD_DEV, int MEAN, boolean gMovement) {
     this.agentNum = agentNum;
     this.agentSize = agentSize;
     this.initialInf = initialInf;
     this.STD_DEV = STD_DEV;
     this.MEAN = MEAN;
+    this.gMovement = gMovement;
     state = SimStates.STOPPED;
   }
 
@@ -89,8 +94,13 @@ class Simulation {
           if (walkers[i].state == AgentStates.INFECTED) infected++;
           if (walkers[i].state == AgentStates.DEAD) dead++;
           if (walkers[i].state == AgentStates.RECOVERED) immune++;
-
-          walkers[i].step(STD_DEV, MEAN);
+          
+          if(gMovement){
+            walkers[i].stepGaussian(STD_DEV, MEAN);
+          }else{
+            walkers[i].stepFixed(fixedSpeed, maxAngleChange);
+          }
+          
           walkers[i].outcome(0.01, 0.001);
           walkers[i].infect(1/frameRate);
         }
@@ -143,10 +153,10 @@ class AgentStates {
 class Walker {
   int size;
   float x, y;
-
   // Possible agent states
   int state;
-
+  float angle = random(360);
+  
   Walker(float x, float y, int size, int state) {
     this.x = x;
     this.y = y;
@@ -155,7 +165,7 @@ class Walker {
   }
 
   // Makes a step in a random direction with a random amount of distance determined by a normal distribution
-  void step(int STD_DEV, int MEAN) {
+  void stepGaussian(int STD_DEV, int MEAN) {
     if (state == AgentStates.DEAD) return;
 
     float speed = (float) gen.nextGaussian();
@@ -167,6 +177,18 @@ class Walker {
     y += r * sin(random(2 * PI));
 
     // Constrain agent position inside the screen.
+    x = constrain(x, 0, 720-1);
+    y = constrain(y, 0, height-1);
+  }
+  
+  void stepFixed(float speed, float angleChangeMax){
+    if (state == AgentStates.DEAD) return;
+    
+    x += speed * cos(radians(angle));
+    y += speed * sin(radians(angle));
+    
+    angle += random(-angleChangeMax, angleChangeMax);
+    
     x = constrain(x, 0, 720-1);
     y = constrain(y, 0, height-1);
   }

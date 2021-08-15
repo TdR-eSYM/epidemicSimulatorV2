@@ -7,7 +7,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
-Simulation sim = new Simulation(400, 10, 20, 1, 3);
+Simulation sim = new Simulation(400, 10, 20, 1, 3, true);
 
 Random gen;
 
@@ -29,7 +29,11 @@ TextBox agentWalkSTD_DEV = new TextBox(760, 220, 60, 31, color(255), color(120),
 
 TextBox agentWalkMEAN = new TextBox(760, 220, 60, 31, color(255), color(120), false);
 
-TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB, agentWalkSTD_DEV, agentWalkMEAN};
+TextBox agentWalkSPEED = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+
+TextBox agentWalkANGLECHG = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+
+TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB, agentWalkSTD_DEV, agentWalkMEAN, agentWalkSPEED, agentWalkANGLECHG};
 
 Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
 
@@ -49,8 +53,10 @@ Graph dead = new Graph (740, 380, 520, 320, color(0, 0, 0), false);
 
 CheckBox renderEngineCheck = new CheckBox(740, 280, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox graphsEngineCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox gaussianMovementCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox switchCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 
-CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck};
+CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, gaussianMovementCheck, switchCheck};
 
 Window engineWindow, agentsWindow;
 
@@ -65,7 +71,7 @@ void setup() {
 
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
 
-  agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 200, color(80), color(50));
+  agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 300, color(80), color(50));
 }
 
 void exit() {
@@ -198,13 +204,14 @@ void draw() {
     int x = engineWindow.x;
     int y = engineWindow.y;
     text("Render Engine: ", x+20, y+60);
+    text("Disable Graphs: ", x+20, y+98);
+    
     renderEngineCheck.x = x + 240;
     renderEngineCheck.y = y + 44;
-
-
-    text("Disable Graphs: ", x+20, y+98);
+    
     graphsEngineCheck.x = x + 240;
     graphsEngineCheck.y = y + 82;
+    
     renderEngineCheck.render();
     graphsEngineCheck.render();
   }
@@ -217,15 +224,34 @@ void draw() {
     
     text("Gaussian Movement: ", x+20, y+112);
     
+    text("Fixed Movement: ", x+20, y+212);
+    
     textSize(14);
     
     text("STD_DEV", x+21, y+140);
     text("MEAN", x+111, y+140);
     
+    text("SPEED", x+28, y+240);
+    text("ANGLE CHG", x+95, y+240);
+    
     agentSizeTB.x = x + 210;
     agentSizeTB.y = y + 42;
     agentSizeTB.render();
     sim.agentSize = int(agentSizeTB.text);
+    
+    if(gaussianMovementCheck.pressed){
+      agentWalkSTD_DEV.blocked = false;
+      agentWalkMEAN.blocked = false;
+      
+      agentWalkSPEED.blocked = true;
+      agentWalkANGLECHG.blocked = true;
+    }else{
+      agentWalkSTD_DEV.blocked = true;
+      agentWalkMEAN.blocked = true;
+      
+      agentWalkSPEED.blocked = false;
+      agentWalkANGLECHG.blocked = false;
+    }
     
     agentWalkSTD_DEV.x = x + 20;
     agentWalkSTD_DEV.y = y + 150;
@@ -236,5 +262,24 @@ void draw() {
     agentWalkMEAN.y = y + 150;
     agentWalkMEAN.render();
     sim.MEAN = int(agentWalkMEAN.text);
+    
+    agentWalkSPEED.x = x + 20;
+    agentWalkSPEED.y = y + 250;
+    agentWalkSPEED.render();
+    sim.fixedSpeed = int(agentWalkSPEED.text);
+    
+    agentWalkANGLECHG.x = x + 100;
+    agentWalkANGLECHG.y = y + 250;
+    agentWalkANGLECHG.render();
+    sim.maxAngleChange = int(agentWalkANGLECHG.text);
+    
+    switchCheck.x = x + 240;
+    switchCheck.y = y + 195;
+    switchCheck.render();
+    
+    gaussianMovementCheck.x = x + 240;
+    gaussianMovementCheck.y = y + 96;
+    gaussianMovementCheck.render();
+    sim.gMovement = gaussianMovementCheck.pressed;
   }
 }

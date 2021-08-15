@@ -163,6 +163,7 @@ class TextBox {
     } else {
       fill(backColor);
     }
+    if(blocked) fill (100);
     rect(x, y, sizex, sizey);
 
     fill(foreColor);

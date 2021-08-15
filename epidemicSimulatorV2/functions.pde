@@ -3,33 +3,47 @@ void loadConfig() {
     config = loadJSONObject(dataPath("settings.json"));
     renderEngineCheck.pressed = config.getBoolean("renderEngine");
     graphsEngineCheck.pressed = config.getBoolean("disableGraphs");
+    gaussianMovementCheck.pressed = config.getBoolean("gaussMov");
     suceptibleNumTB.text = config.getString("susceptibleNum");
     infectedNumTB.text = config.getString("infectedNum");
     renderLenTB.text = config.getString("renderLen");
     agentSizeTB.text = config.getString("agentSize");
     agentWalkSTD_DEV.text = config.getString("STD_DEV");
     agentWalkMEAN.text = config.getString("MEAN");
+    agentWalkSPEED.text = config.getString("fixedSpeed");
+    agentWalkANGLECHG.text = config.getString("angleChange");
+    
+    // Special dummy checkbox logic
+    if(!gaussianMovementCheck.pressed){
+      switchCheck.pressed = true;
+    }
   } 
-  catch (NullPointerException e) {
+  catch (Exception e) {
     config = new JSONObject();
+    gaussianMovementCheck.pressed = true;
     suceptibleNumTB.text = "400";
     infectedNumTB.text = "20";
     renderLenTB.text = "10";
     agentSizeTB.text = "10";
     agentWalkSTD_DEV.text = "1";
     agentWalkMEAN.text = "3";
+    agentWalkSPEED.text = "1";
+    agentWalkANGLECHG.text = "10";
   }
 }
 
 void saveConfig() {
   config.setBoolean("renderEngine", renderEngineCheck.pressed);
   config.setBoolean("disableGraphs", graphsEngineCheck.pressed);
+  config.setBoolean("gaussMov", gaussianMovementCheck.pressed);
   config.setString("susceptibleNum", suceptibleNumTB.text);
   config.setString("infectedNum", infectedNumTB.text);
   config.setString("renderLen", renderLenTB.text);
   config.setString("agentSize", agentSizeTB.text);
   config.setString("STD_DEV", agentWalkSTD_DEV.text);
   config.setString("MEAN", agentWalkMEAN.text);
+  config.setString("fixedSpeed", agentWalkSPEED.text);
+  config.setString("angleChange", agentWalkANGLECHG.text);
   saveJSONObject(config, dataPath("settings.json"));
 }
 

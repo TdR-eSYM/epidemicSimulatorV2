@@ -33,6 +33,22 @@ void mouseClicked() {
     if (checkboxes[i].blocked) continue;
     if (mouseY > checkboxes[i].y && mouseY < checkboxes[i].y + checkboxes[i].sizey && mouseX > checkboxes[i].x && mouseX < checkboxes[i].x + checkboxes[i].sizex) {
       checkboxes[i].pressed = !checkboxes[i].pressed;
+      
+      //Special interruptor handling
+      if(switchCheck == checkboxes[i]){
+        if(switchCheck.pressed){
+          gaussianMovementCheck.pressed = false;
+        }else{
+          gaussianMovementCheck.pressed = true;
+        }
+      }
+      if(gaussianMovementCheck == checkboxes[i]){
+        if(gaussianMovementCheck.pressed){
+          switchCheck.pressed = false;
+        }else{
+          switchCheck.pressed = true;
+        }
+      }
     }
   }
 
