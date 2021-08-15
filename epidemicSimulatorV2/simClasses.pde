@@ -1,7 +1,7 @@
 class Simulation {
   int state;
   Walker[] walkers;
-  int agentNum, agentSize, infected, dead, immune, initialInf;
+  int agentNum, agentSize, infected, dead, immune, initialInf, STD_DEV, MEAN;
   float startInfProb;
 
   int renderLength = 0;
@@ -12,10 +12,12 @@ class Simulation {
   byte[] bakeData;
   ByteBuffer simData;
 
-  Simulation(int agentNum, int agentSize, int initialInf) {
+  Simulation(int agentNum, int agentSize, int initialInf, int STD_DEV, int MEAN) {
     this.agentNum = agentNum;
     this.agentSize = agentSize;
     this.initialInf = initialInf;
+    this.STD_DEV = STD_DEV;
+    this.MEAN = MEAN;
     state = SimStates.STOPPED;
   }
 
@@ -88,7 +90,7 @@ class Simulation {
           if (walkers[i].state == AgentStates.DEAD) dead++;
           if (walkers[i].state == AgentStates.RECOVERED) immune++;
 
-          walkers[i].step();
+          walkers[i].step(STD_DEV, MEAN);
           walkers[i].outcome(0.01, 0.001);
           walkers[i].infect(1/frameRate);
         }
@@ -102,6 +104,7 @@ class Simulation {
     start.blocked = true;
     pause.blocked = false;
     stop.blocked = false;
+    renderEngineCheck.blocked = true;
     this.setup();
   }
 
@@ -117,6 +120,7 @@ class Simulation {
     start.blocked = false;
     pause.blocked = true;
     stop.blocked = true;
+    renderEngineCheck.blocked = false;
     infectedNumTB.text = str(initialInf);
     suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;
@@ -151,7 +155,7 @@ class Walker {
   }
 
   // Makes a step in a random direction with a random amount of distance determined by a normal distribution
-  void step() {
+  void step(int STD_DEV, int MEAN) {
     if (state == AgentStates.DEAD) return;
 
     float speed = (float) gen.nextGaussian();

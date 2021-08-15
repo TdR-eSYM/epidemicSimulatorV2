@@ -67,7 +67,6 @@ class CheckBox {
     this.blocked = blocked;
   }
   void render() {
-
     if (pressed) {
       fill (pressedColor);
     } else { 

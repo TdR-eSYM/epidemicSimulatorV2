@@ -7,6 +7,8 @@ void loadConfig() {
     infectedNumTB.text = config.getString("infectedNum");
     renderLenTB.text = config.getString("renderLen");
     agentSizeTB.text = config.getString("agentSize");
+    agentWalkSTD_DEV.text = config.getString("STD_DEV");
+    agentWalkMEAN.text = config.getString("MEAN");
   } 
   catch (NullPointerException e) {
     config = new JSONObject();
@@ -14,6 +16,8 @@ void loadConfig() {
     infectedNumTB.text = "20";
     renderLenTB.text = "10";
     agentSizeTB.text = "10";
+    agentWalkSTD_DEV.text = "1";
+    agentWalkMEAN.text = "3";
   }
 }
 
@@ -24,6 +28,8 @@ void saveConfig() {
   config.setString("infectedNum", infectedNumTB.text);
   config.setString("renderLen", renderLenTB.text);
   config.setString("agentSize", agentSizeTB.text);
+  config.setString("STD_DEV", agentWalkSTD_DEV.text);
+  config.setString("MEAN", agentWalkMEAN.text);
   saveJSONObject(config, dataPath("settings.json"));
 }
 

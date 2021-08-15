@@ -1,8 +1,10 @@
 {
+  "MEAN": "3",
   "renderEngine": false,
   "disableGraphs": false,
-  "susceptibleNum": "0",
+  "susceptibleNum": "400",
   "renderLen": "10",
-  "infectedNum": "225",
-  "agentSize": "15"
+  "infectedNum": "20",
+  "agentSize": "10",
+  "STD_DEV": "1"
 }

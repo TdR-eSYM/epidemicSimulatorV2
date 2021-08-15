@@ -7,9 +7,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
-Simulation sim = new Simulation(400, 10, 20);
-
-float MEAN, STD_DEV;
+Simulation sim = new Simulation(400, 10, 20, 1, 3);
 
 Random gen;
 
@@ -27,7 +25,11 @@ TextBox renderLenTB = new TextBox(760, 220, 125, 31, color(255), color(120), fal
 
 TextBox agentSizeTB = new TextBox(760, 220, 60, 31, color(255), color(120), false);
 
-TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB};
+TextBox agentWalkSTD_DEV = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+
+TextBox agentWalkMEAN = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+
+TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB, agentWalkSTD_DEV, agentWalkMEAN};
 
 Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
 
@@ -64,8 +66,6 @@ void setup() {
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
 
   agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 200, color(80), color(50));
-  MEAN = 3;
-  STD_DEV = 1;
 }
 
 void exit() {
@@ -214,10 +214,27 @@ void draw() {
     int y = agentsWindow.y;
     
     text("Agent size: ", x+20, y+62);
-    agentSizeTB.x = x + 200;
-    agentSizeTB.y = y + 44;
-    agentSizeTB.render();
     
+    text("Gaussian Movement: ", x+20, y+112);
+    
+    textSize(14);
+    
+    text("STD_DEV", x+21, y+140);
+    text("MEAN", x+111, y+140);
+    
+    agentSizeTB.x = x + 210;
+    agentSizeTB.y = y + 42;
+    agentSizeTB.render();
     sim.agentSize = int(agentSizeTB.text);
+    
+    agentWalkSTD_DEV.x = x + 20;
+    agentWalkSTD_DEV.y = y + 150;
+    agentWalkSTD_DEV.render();
+    sim.STD_DEV = int(agentWalkSTD_DEV.text);
+    
+    agentWalkMEAN.x = x + 100;
+    agentWalkMEAN.y = y + 150;
+    agentWalkMEAN.render();
+    sim.MEAN = int(agentWalkMEAN.text);
   }
 }
