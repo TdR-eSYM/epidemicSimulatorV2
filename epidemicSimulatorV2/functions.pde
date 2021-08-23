@@ -16,11 +16,13 @@ void loadConfig() {
     // Special dummy checkbox logic
     if(!gaussianMovementCheck.pressed){
       switchCheck.pressed = true;
+      sim.gMovement = false;
     }
   } 
   catch (Exception e) {
     config = new JSONObject();
     gaussianMovementCheck.pressed = true;
+    sim.gMovement = true;
     suceptibleNumTB.text = "400";
     infectedNumTB.text = "20";
     renderLenTB.text = "10";
