@@ -15,6 +15,8 @@ void buttonPressed(String name) {
   case "agentSettings":
     agentsWindow.open = !agentsWindow.open;
     break;
+  case "simTools":
+    toolsWindow.open = !toolsWindow.open;
   }
 }
 

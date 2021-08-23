@@ -43,8 +43,9 @@ Button start = new Button ("start", 0, 225, 0, 1120, 60, 120, 30, false);
 
 Button walkerBtn = new Button ("agentSettings", 0, 120, 200, 760, 300, 120, 30, false);
 Button engineBtn = new Button ("engineSettings", 105, 203, 50, 940, 300, 120, 30, false);
+Button toolsBtn = new Button ("simTools", 225, 155, 25, 1120, 300, 120, 30, false);
 
-Button[] buttons = {stop, pause, start, walkerBtn, engineBtn};
+Button[] buttons = {stop, pause, start, walkerBtn, engineBtn, toolsBtn};
 
 Graph infected = new Graph (740, 380, 520, 320, color(200, 0, 0, 160), true);
 Graph susceptible = new Graph (740, 380, 520, 320, color(0, 200, 0, 160), true);
@@ -58,7 +59,7 @@ CheckBox switchCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 
 
 CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, gaussianMovementCheck, switchCheck};
 
-Window engineWindow, agentsWindow;
+Window engineWindow, agentsWindow, toolsWindow;
 
 JSONObject config;
 
@@ -72,6 +73,8 @@ void setup() {
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
 
   agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 300, color(80), color(50));
+  
+  toolsWindow = new Window("Simulation Tools", width/2-250, 260, 300, 300, color(80), color(50));
 }
 
 void exit() {
@@ -118,6 +121,8 @@ void draw() {
   walkerBtn.render();
 
   engineBtn.render();
+  
+  toolsBtn.render();
 
   if (!graphsEngineCheck.pressed) {
     infected.update(sim.infected, sim.agentNum);
@@ -168,7 +173,9 @@ void draw() {
 
   text ("Agents", 790, 322);
 
-  text ("Engine", 973, 322);
+  text ("Engine", 972, 322);
+  
+  text ("Tools", 1155, 322);
 
   textSize (15);
   text ("Gràfic susceptibles i infectats:", 750, 370);
@@ -199,7 +206,8 @@ void draw() {
 
   engineWindow.render();
   agentsWindow.render();
-
+  toolsWindow.render();
+  
   if (engineWindow.open) {
     int x = engineWindow.x;
     int y = engineWindow.y;
@@ -278,5 +286,20 @@ void draw() {
     gaussianMovementCheck.render();
     
     UpdateSimConfig();
+  }
+  if (toolsWindow.open) {
+    int x = engineWindow.x;
+    int y = engineWindow.y;
+    text("Render Engine: ", x+20, y+60);
+    text("Disable Graphs: ", x+20, y+98);
+
+    renderEngineCheck.x = x + 240;
+    renderEngineCheck.y = y + 44;
+
+    graphsEngineCheck.x = x + 240;
+    graphsEngineCheck.y = y + 82;
+
+    renderEngineCheck.render();
+    graphsEngineCheck.render();
   }
 }
