@@ -190,7 +190,7 @@ class Walker {
     y += speed * sin(radians(angle));
 
     if (x <= 0 || x >= 719 || y <= 0 || y >= width) {
-      //angleChg = angleChangeMax * 3;
+      angleChg = angleChangeMax * 4; // Prevents from bumping into walls
     }
 
     angle += random(-angleChg, angleChg);
