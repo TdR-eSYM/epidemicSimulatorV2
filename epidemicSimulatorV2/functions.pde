@@ -12,17 +12,16 @@ void loadConfig() {
     agentWalkMEAN.text = config.getString("MEAN");
     agentWalkSPEED.text = config.getString("fixedSpeed");
     agentWalkANGLECHG.text = config.getString("angleChange");
-    
+
     // Special dummy checkbox logic
-    if(!gaussianMovementCheck.pressed){
+    if (!gaussianMovementCheck.pressed) {
       switchCheck.pressed = true;
-      sim.gMovement = false;
     }
+    UpdateSimConfig();
   } 
   catch (Exception e) {
     config = new JSONObject();
     gaussianMovementCheck.pressed = true;
-    sim.gMovement = true;
     suceptibleNumTB.text = "400";
     infectedNumTB.text = "20";
     renderLenTB.text = "10";
@@ -32,6 +31,15 @@ void loadConfig() {
     agentWalkSPEED.text = "1";
     agentWalkANGLECHG.text = "10";
   }
+}
+
+void UpdateSimConfig(){
+   sim.agentSize = int(agentSizeTB.text);
+   sim.STD_DEV = int(agentWalkSTD_DEV.text);
+   sim.MEAN = int(agentWalkMEAN.text);
+   sim.fixedSpeed = int(agentWalkSPEED.text);
+   sim.maxAngleChange = int(agentWalkANGLECHG.text);
+   sim.gMovement = gaussianMovementCheck.pressed;
 }
 
 void saveConfig() {

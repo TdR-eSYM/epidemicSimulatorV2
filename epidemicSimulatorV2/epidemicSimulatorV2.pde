@@ -205,13 +205,13 @@ void draw() {
     int y = engineWindow.y;
     text("Render Engine: ", x+20, y+60);
     text("Disable Graphs: ", x+20, y+98);
-    
+
     renderEngineCheck.x = x + 240;
     renderEngineCheck.y = y + 44;
-    
+
     graphsEngineCheck.x = x + 240;
     graphsEngineCheck.y = y + 82;
-    
+
     renderEngineCheck.render();
     graphsEngineCheck.render();
   }
@@ -219,67 +219,64 @@ void draw() {
   if (agentsWindow.open) {
     int x = agentsWindow.x;
     int y = agentsWindow.y;
-    
+
     text("Agent size: ", x+20, y+62);
-    
+
     text("Gaussian Movement: ", x+20, y+112);
-    
+
     text("Fixed Movement: ", x+20, y+212);
-    
+
     textSize(14);
-    
+
     text("STD_DEV", x+21, y+140);
     text("MEAN", x+111, y+140);
-    
+
     text("SPEED", x+28, y+240);
     text("ANGLE CHG", x+95, y+240);
-    
+
     agentSizeTB.x = x + 210;
     agentSizeTB.y = y + 42;
     agentSizeTB.render();
-    sim.agentSize = int(agentSizeTB.text);
-    
-    if(gaussianMovementCheck.pressed){
+
+
+    if (gaussianMovementCheck.pressed) {
       agentWalkSTD_DEV.blocked = false;
       agentWalkMEAN.blocked = false;
-      
+
       agentWalkSPEED.blocked = true;
       agentWalkANGLECHG.blocked = true;
-    }else{
+    } else {
       agentWalkSTD_DEV.blocked = true;
       agentWalkMEAN.blocked = true;
-      
+
       agentWalkSPEED.blocked = false;
       agentWalkANGLECHG.blocked = false;
     }
-    
+
     agentWalkSTD_DEV.x = x + 20;
     agentWalkSTD_DEV.y = y + 150;
     agentWalkSTD_DEV.render();
-    sim.STD_DEV = int(agentWalkSTD_DEV.text);
-    
+
     agentWalkMEAN.x = x + 100;
     agentWalkMEAN.y = y + 150;
     agentWalkMEAN.render();
-    sim.MEAN = int(agentWalkMEAN.text);
-    
+
     agentWalkSPEED.x = x + 20;
     agentWalkSPEED.y = y + 250;
     agentWalkSPEED.render();
-    sim.fixedSpeed = int(agentWalkSPEED.text);
-    
+
     agentWalkANGLECHG.x = x + 100;
     agentWalkANGLECHG.y = y + 250;
     agentWalkANGLECHG.render();
-    sim.maxAngleChange = int(agentWalkANGLECHG.text);
-    
+
     switchCheck.x = x + 240;
     switchCheck.y = y + 195;
     switchCheck.render();
-    
+
     gaussianMovementCheck.x = x + 240;
     gaussianMovementCheck.y = y + 96;
     gaussianMovementCheck.render();
-    sim.gMovement = gaussianMovementCheck.pressed;
+    
+    UpdateSimConfig();
   }
 }
