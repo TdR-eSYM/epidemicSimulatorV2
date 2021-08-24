@@ -1,0 +1,13 @@
+{
+  "MEAN": "3",
+  "renderEngine": false,
+  "fixedSpeed": "1",
+  "disableGraphs": false,
+  "susceptibleNum": "30",
+  "renderLen": "10",
+  "angleChange": "10",
+  "infectedNum": "308",
+  "agentSize": "10",
+  "gaussMov": false,
+  "STD_DEV": "1"
+}
