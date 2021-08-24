@@ -74,7 +74,7 @@ void setup() {
 
   agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 300, color(80), color(50));
   
-  toolsWindow = new Window("Simulation Tools", width/2-250, 260, 300, 300, color(80), color(50));
+  toolsWindow = new Window("Simulation Tools", width/2-610, 20, 300, 300, color(80), color(50));
 }
 
 void exit() {
@@ -290,16 +290,7 @@ void draw() {
   if (toolsWindow.open) {
     int x = engineWindow.x;
     int y = engineWindow.y;
-    text("Render Engine: ", x+20, y+60);
-    text("Disable Graphs: ", x+20, y+98);
-
-    renderEngineCheck.x = x + 240;
-    renderEngineCheck.y = y + 44;
-
-    graphsEngineCheck.x = x + 240;
-    graphsEngineCheck.y = y + 82;
-
-    renderEngineCheck.render();
-    graphsEngineCheck.render();
+    
+    
   }
 }
