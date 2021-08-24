@@ -199,6 +199,21 @@ class Walker {
     y = constrain(y, 0, height-1);
   }
 
+  void socialDistance(float dist, float toughness) {
+    for (int i = 0; i < sim.agentNum; i++) {
+      Walker other = sim.walkers[i];
+      if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
+        if ((x + size/2)*dist > other.x - other.size/2 && (x - size/2)*dist < other.x + other.size/2) {
+          if ((y + size/2)*dist > other.y - other.size/2 && (y - size/2)*dist < other.y + other.size/2) {
+            if (random(1) < toughness) {
+              sim.walkers[i].size = 5;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // Agent falls on two of the defined states when infected
   void outcome(float die, float recover) {
     if (state == AgentStates.INFECTED) {

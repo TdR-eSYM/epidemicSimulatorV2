@@ -56,8 +56,10 @@ CheckBox renderEngineCheck = new CheckBox(740, 280, 20, 20, color(230), color(0,
 CheckBox graphsEngineCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox gaussianMovementCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox switchCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox socialDistancingCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox testingCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 
-CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, gaussianMovementCheck, switchCheck};
+CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, gaussianMovementCheck, switchCheck, socialDistancingCheck, testingCheck};
 
 Window engineWindow, agentsWindow, toolsWindow;
 
@@ -73,7 +75,7 @@ void setup() {
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
 
   agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 300, color(80), color(50));
-  
+
   toolsWindow = new Window("Simulation Tools", width/2-610, 20, 300, 300, color(80), color(50));
 }
 
@@ -121,7 +123,7 @@ void draw() {
   walkerBtn.render();
 
   engineBtn.render();
-  
+
   toolsBtn.render();
 
   if (!graphsEngineCheck.pressed) {
@@ -174,7 +176,7 @@ void draw() {
   text ("Agents", 790, 322);
 
   text ("Engine", 972, 322);
-  
+
   text ("Tools", 1155, 322);
 
   textSize (15);
@@ -207,7 +209,7 @@ void draw() {
   engineWindow.render();
   agentsWindow.render();
   toolsWindow.render();
-  
+
   if (engineWindow.open) {
     int x = engineWindow.x;
     int y = engineWindow.y;
@@ -284,13 +286,23 @@ void draw() {
     gaussianMovementCheck.x = x + 240;
     gaussianMovementCheck.y = y + 96;
     gaussianMovementCheck.render();
-    
+
     UpdateSimConfig();
   }
   if (toolsWindow.open) {
-    int x = engineWindow.x;
-    int y = engineWindow.y;
-    
-    
+    int x = toolsWindow.x;
+    int y = toolsWindow.y;
+
+    text("Social Distancing: ", x+20, y+60);
+    text("Testing: ", x+20, y+98);
+
+    socialDistancingCheck.x = x + 240;
+    socialDistancingCheck.y = y + 44;
+
+    testingCheck.x = x + 240;
+    testingCheck.y = y + 82;
+
+    socialDistancingCheck.render();
+    testingCheck.render();
   }
 }
