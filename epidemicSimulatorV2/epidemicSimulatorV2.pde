@@ -13,31 +13,31 @@ Random gen;
 
 // Textbox starter number of agents
 
-TextBox suceptibleNumTB = new TextBox(760, 140, 125, 31, color(255), color(120), false);
+TextBox suceptibleNumTB = new TextBox(760, 140, 125, 31, color(255), color(120), false, false);
 
 // Textbox starter number of infected
-TextBox infectedNumTB = new TextBox(930, 140, 125, 31, color(255), color(120), false);
+TextBox infectedNumTB = new TextBox(930, 140, 125, 31, color(255), color(120), false, false);
 
 // Textbox time where vacunation starts
-TextBox agentsNumTB = new TextBox(1095, 140, 125, 31, color(255), color(120), true);
+TextBox agentsNumTB = new TextBox(1095, 140, 125, 31, color(255), color(120), true, false);
 
-TextBox renderLenTB = new TextBox(760, 220, 125, 31, color(255), color(120), false);
+TextBox renderLenTB = new TextBox(760, 220, 125, 31, color(255), color(120), false, false);
 
-TextBox agentSizeTB = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox agentSizeTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox agentWalkSTD_DEV = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox agentWalkSTD_DEV = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox agentWalkMEAN = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox agentWalkMEAN = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox agentWalkSPEED = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox agentWalkSPEED = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox agentWalkANGLECHG = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox agentWalkANGLECHG = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox distanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox distanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox toughnessTB = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox toughnessTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, true);
 
-TextBox reactionTB = new TextBox(760, 220, 60, 31, color(255), color(120), false);
+TextBox reactionTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
 TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB, agentWalkSTD_DEV, agentWalkMEAN, agentWalkSPEED, agentWalkANGLECHG, distanceTB, toughnessTB, reactionTB};
 

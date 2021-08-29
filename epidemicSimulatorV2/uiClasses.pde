@@ -146,8 +146,9 @@ class TextBox {
   boolean focus = false;
   boolean release = true;
   boolean blocked = false;
+  boolean percent = false;
   color foreColor, backColor;
-  TextBox(int x, int y, int sizex, int sizey, color foreColor, color backColor, boolean blocked) {
+  TextBox(int x, int y, int sizex, int sizey, color foreColor, color backColor, boolean blocked, boolean percent) {
     this.x = x;
     this.y = y;
     this.sizey = sizey;
@@ -155,6 +156,7 @@ class TextBox {
     this.foreColor = foreColor;
     this.backColor = backColor;
     this.blocked = blocked;
+    this.percent = percent;
   }
 
   void render() {
@@ -169,5 +171,9 @@ class TextBox {
     fill(foreColor);
     textSize(25);
     text(text, x + 7, y + 25);
+    if(percent){
+      textSize(15);
+      text("%", x + 65, y + 25);
+    }
   }
 }
