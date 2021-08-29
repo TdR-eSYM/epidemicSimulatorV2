@@ -1,17 +1,20 @@
 {
   "MEAN": "3",
-  "sDistance": "2",
-  "sToughness": "100",
+  "sDistance": "5",
+  "sToughness": "90",
+  "deathChance": "30",
   "renderEngine": false,
-  "susceptibleNum": "200",
-  "angleChange": "10",
+  "susceptibleNum": "100",
+  "angleChange": "20",
+  "recChance": "50",
   "fixedSpeed": "1",
   "disableGraphs": false,
-  "socialDist": true,
+  "socialDist": false,
   "renderLen": "10",
   "infectedNum": "20",
   "agentSize": "10",
-  "gaussMov": true,
+  "gaussMov": false,
   "STD_DEV": "1",
-  "sReaction": "3"
+  "sReaction": "8",
+  "infChance": "50"
 }

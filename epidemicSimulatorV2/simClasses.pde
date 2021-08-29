@@ -2,7 +2,7 @@ class Simulation {
   int state;
   Walker[] walkers;
   int agentNum, agentSize, infected, dead, immune, initialInf, STD_DEV, MEAN;
-  float startInfProb;
+  float startInfProb, infProb, deathProb, recProb;
 
   int renderLength = 0;
   int dataOffset = 0;
@@ -103,8 +103,8 @@ class Simulation {
             walkers[i].stepFixed(fixedSpeed, maxAngleChange);
           }
           if (socialDistancingCheck.pressed) walkers[i].socialDistance(sDistance, sToughness, sReaction);
-          walkers[i].outcome(0.01, 0.001);
-          walkers[i].infect(1/frameRate);
+          walkers[i].outcome(deathProb/frameRate/100, recProb/frameRate/100);
+          walkers[i].infect(infProb/frameRate/100);
         }
         walkers[i].render();
       }
@@ -219,6 +219,11 @@ class Walker {
                   y -= reaction;
                 }else{
                   y += reaction;
+                }
+                if(random(1) > 0.5){
+                  angle += 90;
+                }else{
+                  angle -= 90;
                 }
               }
             }

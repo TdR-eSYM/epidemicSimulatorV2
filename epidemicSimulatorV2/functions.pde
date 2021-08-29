@@ -16,6 +16,9 @@ void loadConfig() {
     distanceTB.text = config.getString("sDistance");
     toughnessTB.text = config.getString("sToughness");
     reactionTB.text = config.getString("sReaction");
+    infChanceTB.text = config.getString("infChance");
+    deathChanceTB.text = config.getString("deathChance");
+    recChanceTB.text = config.getString("recChance");
 
     // Special dummy checkbox logic
     if (!gaussianMovementCheck.pressed) {
@@ -37,6 +40,9 @@ void loadConfig() {
     distanceTB.text = "2";
     toughnessTB.text = "50";
     reactionTB.text = "3";
+    infChanceTB.text = "20";
+    deathChanceTB.text = "30";
+    recChanceTB.text = "50";
   }
 }
 
@@ -65,6 +71,9 @@ void saveConfig() {
   config.setString("sDistance", distanceTB.text);
   config.setString("sToughness", toughnessTB.text);
   config.setString("sReaction", reactionTB.text);
+  config.setString("infChance", infChanceTB.text);
+  config.setString("deathChance", deathChanceTB.text);
+  config.setString("recChance", recChanceTB.text);
 
   saveJSONObject(config, dataPath("settings.json"));
 }

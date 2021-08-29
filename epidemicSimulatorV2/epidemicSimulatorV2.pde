@@ -39,7 +39,29 @@ TextBox toughnessTB = new TextBox(760, 220, 60, 31, color(255), color(120), fals
 
 TextBox reactionTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
 
-TextBox[] textBoxes = {suceptibleNumTB, infectedNumTB, agentsNumTB, renderLenTB, agentSizeTB, agentWalkSTD_DEV, agentWalkMEAN, agentWalkSPEED, agentWalkANGLECHG, distanceTB, toughnessTB, reactionTB};
+TextBox infChanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, true);
+
+TextBox deathChanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, true);
+
+TextBox recChanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, true);
+
+TextBox[] textBoxes = {
+  suceptibleNumTB, 
+  infectedNumTB, 
+  agentsNumTB, 
+  renderLenTB, 
+  agentSizeTB, 
+  agentWalkSTD_DEV, 
+  agentWalkMEAN, 
+  agentWalkSPEED, 
+  agentWalkANGLECHG, 
+  distanceTB, 
+  toughnessTB, 
+  reactionTB, 
+  infChanceTB, 
+  deathChanceTB, 
+  recChanceTB
+};
 
 Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
 
@@ -80,7 +102,7 @@ void setup() {
 
   engineWindow = new Window("Engine Settings", width/2-250, 20, 300, 200, color(80), color(50));
 
-  agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 300, color(80), color(50));
+  agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 400, color(80), color(50));
 
   toolsWindow = new Window("Simulation Tools", width/2-610, 20, 300, 300, color(80), color(50));
 }
@@ -219,6 +241,8 @@ void draw() {
   if (engineWindow.open) {
     int x = engineWindow.x;
     int y = engineWindow.y;
+    textSize(18);
+    fill(255);
     text("Render Engine: ", x+20, y+60);
     text("Disable Graphs: ", x+20, y+98);
 
@@ -232,15 +256,68 @@ void draw() {
     graphsEngineCheck.render();
   }
 
+  if (toolsWindow.open) {
+    int x = toolsWindow.x;
+    int y = toolsWindow.y;
+    textSize(18);
+    fill(255);
+    text("Social Distancing: ", x+20, y+60);
+    text("Testing: ", x+20, y+178);
+
+    textSize(14);
+
+    text("DIST", x+31, y+130);
+    text("TGHS", x+126, y+130);
+    text("RCTON", x+221, y+130);
+
+    socialDistancingCheck.x = x + 240;
+    socialDistancingCheck.y = y + 44;
+
+    distanceTB.x = x + 20;
+    distanceTB.y = y + 80;
+
+    toughnessTB.x = x + 115;
+    toughnessTB.y = y + 80;
+
+    reactionTB.x = x + 215;
+    reactionTB.y = y + 80;
+
+    testingCheck.x = x + 240;
+    testingCheck.y = y + 162;
+
+    if (socialDistancingCheck.pressed) {
+      distanceTB.blocked = false;
+      toughnessTB.blocked = false;
+      reactionTB.blocked = false;
+    } else {
+      distanceTB.blocked = true;
+      toughnessTB.blocked = true;
+      reactionTB.blocked = true;
+    }
+
+    distanceTB.render();
+    toughnessTB.render();
+    reactionTB.render();
+    socialDistancingCheck.render();
+    testingCheck.render();
+
+    sim.sDistance = int(distanceTB.text);
+    sim.sToughness = int(toughnessTB.text)/100;
+    sim.sReaction = int(reactionTB.text);
+  }
+
   if (agentsWindow.open) {
     int x = agentsWindow.x;
     int y = agentsWindow.y;
-
+    textSize(18);
+    fill(255);
     text("Agent size: ", x+20, y+62);
 
     text("Gaussian Movement: ", x+20, y+112);
 
     text("Fixed Movement: ", x+20, y+212);
+
+    text("Agent globals: ", x+20, y+315);
 
     textSize(14);
 
@@ -249,6 +326,10 @@ void draw() {
 
     text("SPEED", x+28, y+240);
     text("ANGLE CHG", x+95, y+240);
+
+    text("INFECT", x+28, y+380);
+    text("DEATH", x+121, y+380);
+    text("RECOVER", x+216, y+380);
 
     agentSizeTB.x = x + 210;
     agentSizeTB.y = y + 42;
@@ -293,54 +374,22 @@ void draw() {
     gaussianMovementCheck.y = y + 96;
     gaussianMovementCheck.render();
 
+    infChanceTB.x = x + 20;
+    infChanceTB.y = y + 330;
+
+    deathChanceTB.x = x + 115;
+    deathChanceTB.y = y + 330;
+
+    recChanceTB.x = x + 215;
+    recChanceTB.y = y + 330;
+
+    infChanceTB.render();
+    deathChanceTB.render();
+    recChanceTB.render();
+
+    sim.infProb = int(infChanceTB.text);
+    sim.deathProb = int(deathChanceTB.text);
+    sim.recProb = int(recChanceTB.text);
     UpdateSimConfig();
-  }
-  if (toolsWindow.open) {
-    int x = toolsWindow.x;
-    int y = toolsWindow.y;
-
-    text("Social Distancing: ", x+20, y+60);
-    text("Testing: ", x+20, y+178);
-
-    textSize(14);
-
-    text("DIST", x+31, y+130);
-    text("TGHS", x+126, y+130);
-    text("RCTON", x+221, y+130);
-
-    socialDistancingCheck.x = x + 240;
-    socialDistancingCheck.y = y + 44;
-
-    distanceTB.x = x + 20;
-    distanceTB.y = y + 80;
-
-    toughnessTB.x = x + 115;
-    toughnessTB.y = y + 80;
-
-    reactionTB.x = x + 215;
-    reactionTB.y = y + 80;
-
-    testingCheck.x = x + 240;
-    testingCheck.y = y + 162;
-
-    if (socialDistancingCheck.pressed) {
-      distanceTB.blocked = false;
-      toughnessTB.blocked = false;
-      reactionTB.blocked = false;
-    } else {
-      distanceTB.blocked = true;
-      toughnessTB.blocked = true;
-      reactionTB.blocked = true;
-    }
-
-    distanceTB.render();
-    toughnessTB.render();
-    reactionTB.render();
-    socialDistancingCheck.render();
-    testingCheck.render();
-
-    sim.sDistance = int(distanceTB.text);
-    sim.sToughness = int(toughnessTB.text)/100;
-    sim.sReaction = int(reactionTB.text);
   }
 }
