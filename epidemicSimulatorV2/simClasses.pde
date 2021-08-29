@@ -102,7 +102,7 @@ class Simulation {
           } else {
             walkers[i].stepFixed(fixedSpeed, maxAngleChange);
           }
-          if (socialDistancingCheck.pressed) walkers[i].socialDistance(sDistance, sToughness, sReaction);
+          if (socialDistancingCheck.pressed) walkers[i].socialDistance(sDistance, sToughness/100, sReaction);
           walkers[i].outcome(deathProb/frameRate/100, recProb/frameRate/100);
           walkers[i].infect(infProb/frameRate/100);
         }
@@ -202,6 +202,9 @@ class Walker {
   }
 
   void socialDistance(float dist, float toughness, float reaction) {
+    noStroke();
+    fill(255, 146, 64, 100);
+    circle(x, y, dist*size);
     for (int i = 0; i < sim.agentNum; i++) {
       Walker other = sim.walkers[i];
       if (this != other) {
@@ -209,20 +212,20 @@ class Walker {
           if (x + (size*dist)/2 > other.x - (other.size*dist)/2 && x - (size*dist)/2 < other.x + (other.size)/2) {
             if (y + (size*dist)/2 > other.y - (other.size*dist)/2 && y - (size*dist)/2 < other.y + (other.size*dist)/2) {
               if (random(1) < toughness) {
-                if(x < other.x){
+                if (x < other.x) {
                   x -= reaction;
-                }else{
+                } else {
                   x += reaction;
                 }
-                
-                if(y < other.y){
+
+                if (y < other.y) {
                   y -= reaction;
-                }else{
+                } else {
                   y += reaction;
                 }
-                if(random(1) > 0.5){
+                if (random(1) > 0.5) {
                   angle += 90;
-                }else{
+                } else {
                   angle -= 90;
                 }
               }
@@ -265,7 +268,7 @@ class Walker {
 
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)
   void render() {
-    stroke(50);
+    //stroke(50);
     if (state == AgentStates.INFECTED) {
       fill(255, 0, 0);
     } else if (state == AgentStates.DEAD) {

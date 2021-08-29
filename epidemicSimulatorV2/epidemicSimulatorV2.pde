@@ -300,10 +300,8 @@ void draw() {
     reactionTB.render();
     socialDistancingCheck.render();
     testingCheck.render();
-
-    sim.sDistance = int(distanceTB.text);
-    sim.sToughness = int(toughnessTB.text)/100;
-    sim.sReaction = int(reactionTB.text);
+    
+    UpdateSimConfig();
   }
 
   if (agentsWindow.open) {
@@ -387,9 +385,6 @@ void draw() {
     deathChanceTB.render();
     recChanceTB.render();
 
-    sim.infProb = int(infChanceTB.text);
-    sim.deathProb = int(deathChanceTB.text);
-    sim.recProb = int(recChanceTB.text);
     UpdateSimConfig();
   }
 }

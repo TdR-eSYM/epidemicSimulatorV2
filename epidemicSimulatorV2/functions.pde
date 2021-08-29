@@ -52,6 +52,13 @@ void UpdateSimConfig() {
   sim.MEAN = int(agentWalkMEAN.text);
   sim.fixedSpeed = int(agentWalkSPEED.text);
   sim.maxAngleChange = int(agentWalkANGLECHG.text);
+  sim.infProb = int(infChanceTB.text);
+  sim.deathProb = int(deathChanceTB.text);
+  sim.recProb = int(recChanceTB.text);
+
+  sim.sDistance = int(distanceTB.text);
+  sim.sToughness = int(toughnessTB.text);
+  sim.sReaction = int(reactionTB.text);
   sim.gMovement = gaussianMovementCheck.pressed;
 }
 
