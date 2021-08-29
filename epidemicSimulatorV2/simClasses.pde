@@ -209,7 +209,7 @@ class Walker {
       Walker other = sim.walkers[i];
       if (this != other) {
         if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
-          if (x + (size*dist)/2 > other.x - (other.size*dist)/2 && x - (size*dist)/2 < other.x + (other.size)/2) {
+          if (x + (size*dist)/2 > other.x - (other.size*dist)/2 && x - (size*dist)/2 < other.x + (other.size*dist)/2) {
             if (y + (size*dist)/2 > other.y - (other.size*dist)/2 && y - (size*dist)/2 < other.y + (other.size*dist)/2) {
               if (random(1) < toughness) {
                 if (x < other.x) {
@@ -268,7 +268,7 @@ class Walker {
 
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)
   void render() {
-    //stroke(50);
+    noStroke();
     if (state == AgentStates.INFECTED) {
       fill(255, 0, 0);
     } else if (state == AgentStates.DEAD) {

@@ -11,7 +11,7 @@
   "disableGraphs": true,
   "socialDist": true,
   "renderLen": "10",
-  "infectedNum": "22",
+  "infectedNum": "12",
   "agentSize": "10",
   "gaussMov": true,
   "STD_DEV": "1",
