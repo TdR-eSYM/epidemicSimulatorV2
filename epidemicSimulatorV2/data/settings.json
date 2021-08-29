@@ -1,13 +1,17 @@
 {
   "MEAN": "3",
+  "sDistance": "2",
+  "sToughness": "100",
   "renderEngine": false,
+  "susceptibleNum": "200",
+  "angleChange": "10",
   "fixedSpeed": "1",
   "disableGraphs": false,
-  "susceptibleNum": "30",
+  "socialDist": true,
   "renderLen": "10",
-  "angleChange": "10",
-  "infectedNum": "308",
+  "infectedNum": "20",
   "agentSize": "10",
-  "gaussMov": false,
-  "STD_DEV": "1"
+  "gaussMov": true,
+  "STD_DEV": "1",
+  "sReaction": "3"
 }

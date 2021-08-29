@@ -16,6 +16,8 @@ class Simulation {
   int fixedSpeed;
   int maxAngleChange;
 
+  float sDistance, sToughness, sReaction;
+
   Simulation(int agentNum, int agentSize, int initialInf, int STD_DEV, int MEAN, boolean gMovement) {
     this.agentNum = agentNum;
     this.agentSize = agentSize;
@@ -100,7 +102,7 @@ class Simulation {
           } else {
             walkers[i].stepFixed(fixedSpeed, maxAngleChange);
           }
-
+          if (socialDistancingCheck.pressed) walkers[i].socialDistance(sDistance, sToughness, sReaction);
           walkers[i].outcome(0.01, 0.001);
           walkers[i].infect(1/frameRate);
         }
@@ -199,14 +201,26 @@ class Walker {
     y = constrain(y, 0, height-1);
   }
 
-  void socialDistance(float dist, float toughness) {
+  void socialDistance(float dist, float toughness, float reaction) {
     for (int i = 0; i < sim.agentNum; i++) {
       Walker other = sim.walkers[i];
-      if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
-        if ((x + size/2)*dist > other.x - other.size/2 && (x - size/2)*dist < other.x + other.size/2) {
-          if ((y + size/2)*dist > other.y - other.size/2 && (y - size/2)*dist < other.y + other.size/2) {
-            if (random(1) < toughness) {
-              sim.walkers[i].size = 5;
+      if (this != other) {
+        if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
+          if (x + (size*dist)/2 > other.x - (other.size*dist)/2 && x - (size*dist)/2 < other.x + (other.size)/2) {
+            if (y + (size*dist)/2 > other.y - (other.size*dist)/2 && y - (size*dist)/2 < other.y + (other.size*dist)/2) {
+              if (random(1) < toughness) {
+                if(x < other.x){
+                  x -= reaction;
+                }else{
+                  x += reaction;
+                }
+                
+                if(y < other.y){
+                  y -= reaction;
+                }else{
+                  y += reaction;
+                }
+              }
             }
           }
         }
