@@ -202,31 +202,33 @@ class Walker {
   }
 
   void socialDistance(float dist, float toughness, float reaction) {
-    noStroke();
-    fill(255, 146, 64, 100);
-    circle(x, y, dist*size);
-    for (int i = 0; i < sim.agentNum; i++) {
-      Walker other = sim.walkers[i];
-      if (this != other) {
-        if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
-          if (x + (size*dist)/2 > other.x - (other.size*dist)/2 && x - (size*dist)/2 < other.x + (other.size*dist)/2) {
-            if (y + (size*dist)/2 > other.y - (other.size*dist)/2 && y - (size*dist)/2 < other.y + (other.size*dist)/2) {
-              if (random(1) < toughness) {
-                if (x < other.x) {
-                  x -= reaction;
-                } else {
-                  x += reaction;
-                }
+    if (state != AgentStates.DEAD && state != AgentStates.RECOVERED) {
+      noStroke();
+      fill(255, 146, 64, 100);
+      circle(x, y, dist*size);
+      for (int i = 0; i < sim.agentNum; i++) {
+        Walker other = sim.walkers[i];
+        if (this != other) {
+          if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
+            if (x + (size*dist)/2 > other.x - (other.size*dist)/2 && x - (size*dist)/2 < other.x + (other.size*dist)/2) {
+              if (y + (size*dist)/2 > other.y - (other.size*dist)/2 && y - (size*dist)/2 < other.y + (other.size*dist)/2) {
+                if (random(1) < toughness) {
+                  if (x < other.x) {
+                    x -= reaction;
+                  } else {
+                    x += reaction;
+                  }
 
-                if (y < other.y) {
-                  y -= reaction;
-                } else {
-                  y += reaction;
-                }
-                if (random(1) > 0.5) {
-                  angle += 90;
-                } else {
-                  angle -= 90;
+                  if (y < other.y) {
+                    y -= reaction;
+                  } else {
+                    y += reaction;
+                  }
+                  if (random(1) > 0.5) {
+                    angle += 90;
+                  } else {
+                    angle -= 90;
+                  }
                 }
               }
             }
