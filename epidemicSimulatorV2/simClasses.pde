@@ -274,7 +274,7 @@ class Walker {
     if (state == AgentStates.INFECTED) {
       fill(255, 0, 0);
     } else if (state == AgentStates.DEAD) {
-      fill(0);
+      fill(0, 0, 0, 200);
     } else if (state == AgentStates.RECOVERED) {
       fill(0, 0, 255);
     } else {
