@@ -19,7 +19,9 @@ void loadConfig() {
     infChanceTB.text = config.getString("infChance");
     deathChanceTB.text = config.getString("deathChance");
     recChanceTB.text = config.getString("recChance");
-
+    testRelaiabilityTB.text = config.getString("testRela");
+    testDelayTB.text = config.getString("testDelay");
+    
     // Special dummy checkbox logic
     if (!gaussianMovementCheck.pressed) {
       switchCheck.pressed = true;
@@ -43,6 +45,8 @@ void loadConfig() {
     infChanceTB.text = "20";
     deathChanceTB.text = "30";
     recChanceTB.text = "50";
+    testRelaiabilityTB.text = "70";
+    testDelayTB.text = "5";
   }
 }
 
@@ -60,6 +64,8 @@ void UpdateSimConfig() {
   sim.sToughness = int(toughnessTB.text);
   sim.sReaction = int(reactionTB.text);
   sim.gMovement = gaussianMovementCheck.pressed;
+  sim.testRelaiability = int(testRelaiabilityTB.text);
+  sim.testDelay = int(testDelayTB.text);
 }
 
 void saveConfig() {
@@ -81,7 +87,9 @@ void saveConfig() {
   config.setString("infChance", infChanceTB.text);
   config.setString("deathChance", deathChanceTB.text);
   config.setString("recChance", recChanceTB.text);
-
+  config.setString("testRela", testRelaiabilityTB.text);
+  config.setString("testDelay", testDelayTB.text);
+    
   saveJSONObject(config, dataPath("settings.json"));
 }
 
