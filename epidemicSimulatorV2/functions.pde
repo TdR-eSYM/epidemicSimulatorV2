@@ -5,6 +5,7 @@ void loadConfig() {
     graphsEngineCheck.pressed = config.getBoolean("disableGraphs");
     gaussianMovementCheck.pressed = config.getBoolean("gaussMov");
     socialDistancingCheck.pressed = config.getBoolean("socialDist");
+    testingCheck.pressed = config.getBoolean("infTesting");
     suceptibleNumTB.text = config.getString("susceptibleNum");
     infectedNumTB.text = config.getString("infectedNum");
     renderLenTB.text = config.getString("renderLen");
@@ -73,6 +74,7 @@ void saveConfig() {
   config.setBoolean("disableGraphs", graphsEngineCheck.pressed);
   config.setBoolean("gaussMov", gaussianMovementCheck.pressed);
   config.setBoolean("socialDist", socialDistancingCheck.pressed);
+  config.setBoolean("infTesting", testingCheck.pressed);
   config.setString("susceptibleNum", suceptibleNumTB.text);
   config.setString("infectedNum", infectedNumTB.text);
   config.setString("renderLen", renderLenTB.text);

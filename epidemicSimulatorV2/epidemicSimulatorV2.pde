@@ -113,15 +113,15 @@ void setup() {
   toolsWindow = new Window("Simulation Tools", width/2-610, 20, 300, 300, color(80), color(50));
 }
 
-void exit() {
-  //put code to run on exit here
-  super.exit();
-  saveConfig();
-}
-
 void draw() {
   // Non-interactive UI
   background(255);
   sim.tick();
   sim.renderUI();
+}
+
+void exit() {
+  //put code to run on exit here
+  super.exit();
+  saveConfig();
 }

@@ -92,6 +92,7 @@ class Simulation {
       }
       frameNum++;
     } else {
+      long now = millis();
       for (int i = 0; i < agentNum; i++) {
         if (state != SimStates.PAUSED) {
           if (walkers[i].state == AgentStates.INFECTED) infected++;
@@ -107,7 +108,14 @@ class Simulation {
           walkers[i].outcome(deathProb/frameRate/100, recProb/frameRate/100);
           walkers[i].infect(infProb/frameRate/100);
           if (testingCheck.pressed) {
-            if (walkers[i].state == AgentStates.INFECTED) {
+            if (walkers[i].state == AgentStates.INFECTED && !walkers[i].confined) {
+              if ((now-startTime) - walkers[i].infTime > testDelay*1000) {
+                if (random(1) <= testRelaiability) {
+                  walkers[i].confined = true;
+                  walkers[i].x = 100;
+                  walkers[i].y = 620;
+                }
+              }
             }
           }
         }
@@ -232,6 +240,13 @@ class Simulation {
 
     agentsNumTB.text = str(agentNum);
     agentsNumTB.render();
+
+    if (testingCheck.pressed) {
+      strokeWeight(4);
+      fill(255, 255, 255, 0);
+      rect(0, 520, 200, 200);
+      strokeWeight(1);
+    }
 
     engineWindow.render();
     agentsWindow.render();
@@ -455,12 +470,28 @@ class Walker {
   int state;
   float angle = random(360);
   long infTime = 0;
-
+  boolean confined = false;
+  boolean hide = false;
   Walker(float x, float y, int size, int state) {
     this.x = x;
     this.y = y;
     this.size = size;
     this.state = state;
+  }
+
+  private void constrainPos() {
+    if (!confined) {
+      if (x - size/2 < 200 && y + size/2 > 520) {
+        hide = true;
+      } else {
+        hide = false;
+      }
+      x = constrain(x, 0, 720-1);
+      y = constrain(y, 0, height-1);
+    } else {
+      x = constrain(x, 0, 200);
+      y = constrain(y, 520, height-1);
+    }
   }
 
   // Makes a step in a random direction with a random amount of distance determined by a normal distribution
@@ -476,8 +507,8 @@ class Walker {
     y += r * sin(random(2 * PI));
 
     // Constrain agent position inside the screen.
-    x = constrain(x, 0, 720-1);
-    y = constrain(y, 0, height-1);
+
+    constrainPos();
   }
 
   void stepFixed(float speed, float angleChangeMax) {
@@ -494,12 +525,11 @@ class Walker {
 
     angle += random(-angleChg, angleChg);
 
-    x = constrain(x, 0, 720-1);
-    y = constrain(y, 0, height-1);
+    constrainPos();
   }
 
   void socialDistance(float dist, float toughness, float reaction) {
-    if (state != AgentStates.DEAD && state != AgentStates.RECOVERED) {
+    if (state != AgentStates.DEAD && state != AgentStates.RECOVERED && !confined) {
       noStroke();
       fill(255, 146, 64, 100);
       circle(x, y, dist*size);
@@ -549,15 +579,17 @@ class Walker {
 
   // Checks if the infected agent is in contact with any other agent and handles the possibility of an infection spread
   void infect(float chance) {
-    if (state == AgentStates.INFECTED) {
+    if (state == AgentStates.INFECTED && !confined) {
       for (int i = 0; i < sim.agentNum; i++) {
         Walker other = sim.walkers[i];
-        if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
-          if (x + size/2 > other.x - other.size/2 && x - size/2 < other.x + other.size/2) {
-            if (y + size/2 > other.y - other.size/2 && y - size/2 < other.y + other.size/2) {
-              if (random(1) < chance) {
-                sim.walkers[i].state = AgentStates.INFECTED;
-                sim.walkers[i].infTime = millis();
+        if (this != other) {
+          if (other.state != AgentStates.DEAD && other.state != AgentStates.RECOVERED) {
+            if (x + size/2 > other.x - other.size/2 && x - size/2 < other.x + other.size/2) {
+              if (y + size/2 > other.y - other.size/2 && y - size/2 < other.y + other.size/2) {
+                if (random(1) < chance) {
+                  sim.walkers[i].state = AgentStates.INFECTED;
+                  sim.walkers[i].infTime = millis();
+                }
               }
             }
           }
@@ -578,6 +610,6 @@ class Walker {
     } else {
       fill(0, 255, 0);
     }
-    circle(x, y, size);
+    if (!hide) circle(x, y, size);
   }
 }
