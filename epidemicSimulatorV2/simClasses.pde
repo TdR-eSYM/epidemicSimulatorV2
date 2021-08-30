@@ -481,7 +481,7 @@ class Walker {
 
   private void constrainPos() {
     if (!confined) {
-      if (renderEngineCheck.pressed) {
+      if (testingCheck.pressed) {
         if (x - size/2 < 200 && y + size/2 > 520) {
           hide = true;
         } else {
