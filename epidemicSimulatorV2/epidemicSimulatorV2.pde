@@ -45,6 +45,10 @@ TextBox deathChanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), fa
 
 TextBox recChanceTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, true);
 
+TextBox testRelaiabilityTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, true);
+
+TextBox testDelayTB = new TextBox(760, 220, 60, 31, color(255), color(120), false, false);
+
 TextBox[] textBoxes = {
   suceptibleNumTB, 
   infectedNumTB, 
@@ -60,7 +64,9 @@ TextBox[] textBoxes = {
   reactionTB, 
   infChanceTB, 
   deathChanceTB, 
-  recChanceTB
+  recChanceTB,
+  testRelaiabilityTB,
+  testDelayTB
 };
 
 Button stop = new Button ("stop", 225, 0, 0, 760, 60, 120, 30, true);
@@ -262,13 +268,16 @@ void draw() {
     textSize(18);
     fill(255);
     text("Social Distancing: ", x+20, y+60);
-    text("Testing: ", x+20, y+178);
+    text("Inf Testing: ", x+20, y+178);
 
     textSize(14);
 
     text("DIST", x+31, y+130);
     text("TGHS", x+126, y+130);
     text("RCTON", x+221, y+130);
+
+    text("RLBTY", x+31, y+250);
+    text("DELAY", x+126, y+250);
 
     socialDistancingCheck.x = x + 240;
     socialDistancingCheck.y = y + 44;
@@ -284,6 +293,13 @@ void draw() {
 
     testingCheck.x = x + 240;
     testingCheck.y = y + 162;
+
+    testRelaiabilityTB.x = x + 20;
+    testRelaiabilityTB.y = y + 200;
+    
+    testDelayTB.x = x + 115;
+    testDelayTB.y = y + 200;
+    
 
     if (socialDistancingCheck.pressed) {
       distanceTB.blocked = false;
@@ -301,6 +317,8 @@ void draw() {
     socialDistancingCheck.render();
     testingCheck.render();
     
+    testRelaiabilityTB.render();
+    testDelayTB.render();
     UpdateSimConfig();
   }
 
