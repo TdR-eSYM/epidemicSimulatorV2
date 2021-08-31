@@ -276,7 +276,7 @@ class Simulation {
       textSize(18);
       fill(255);
       text("Social Distancing: ", x+20, y+60);
-      text("Inf Testing: ", x+20, y+178);
+      text("Infection Testing: ", x+20, y+178);
 
       textSize(14);
 
