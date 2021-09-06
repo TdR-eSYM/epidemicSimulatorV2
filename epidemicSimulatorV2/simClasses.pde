@@ -10,7 +10,7 @@ class Simulation {
   int startTime = 0;
   int pauseTimestamp = 0;
   int pauseTime = 0;
-  
+
   byte[] bakeData;
   ByteBuffer simData;
 
@@ -33,7 +33,7 @@ class Simulation {
 
   void setup() {
     if (renderEngineCheck.pressed) {
-      Process renderProc = launch("cd " + dataPath("RenderEngine/ && simRender.exe " + str(renderLength) + " " + str(agentNum)));
+      Process renderProc = launch("cd " + dataPath("RenderEngine/ && simRender.exe " + str(renderLength) + " " + str(agentNum) + " " + str(agentSize) + " " + str(initialInf) + " " + str(infProb/frameRate/100)));
       try {
         renderProc.waitFor();
       } 
@@ -85,9 +85,15 @@ class Simulation {
       for (int i = 0; i < agentNum; i++) {
         float x = simData.getFloat(dataOffset);
         float y = simData.getFloat(dataOffset+4);
-
-        dataOffset += 8;
-        fill(0, 255, 0);
+        float state = simData.getFloat(dataOffset+8);
+        println(state);
+        dataOffset += 12;
+        if (state == AgentStates.SUSCEPTIBLE) {
+          fill(0, 255, 0);
+        } else {
+          fill(255, 0, 0);
+          infected++;
+        }
         circle(x, y, agentSize);
         /*if (walkers[i].inf) infected++;
          if (walkers[i].dead) dead++;
@@ -217,8 +223,6 @@ class Simulation {
 
     text ("Tools", 1155, 322);
 
-    textSize (15);
-    text ("Gràfic susceptibles i infectats:", 750, 370);
     // Written info in console
     suceptibleNumTB.render();
 
