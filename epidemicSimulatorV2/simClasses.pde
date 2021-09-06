@@ -8,7 +8,9 @@ class Simulation {
   int dataOffset = 0;
   int frameNum = 0;
   int startTime = 0;
-
+  int pauseTimestamp = 0;
+  int pauseTime = 0;
+  
   byte[] bakeData;
   ByteBuffer simData;
 
@@ -62,6 +64,7 @@ class Simulation {
     initialInf = infected;
     state = SimStates.RUNNING;
     startTime = millis();
+    pauseTime = 0;
   }
 
   void tick() {
@@ -193,7 +196,7 @@ class Simulation {
       textSize(18);
       if (state == SimStates.RUNNING) text("T: " + frameNum + "/" + renderLenTB.text + " f", 1140, 29);
     } else {
-      if (state == SimStates.RUNNING) text("T: " + int((millis() - startTime)/1000) + " s", 1200, 29);
+      if (state == SimStates.RUNNING) text("T: " + int((millis() - pauseTime - startTime)/1000) + " s", 1200, 29);
     }
 
     textSize (18);
@@ -434,7 +437,10 @@ class Simulation {
   void pause() {
     if (state == SimStates.RUNNING) {
       state = SimStates.PAUSED;
+      pauseTimestamp = millis();
     } else if (state == SimStates.PAUSED) {
+      pauseTime += millis() - pauseTimestamp;
+      println(pauseTime);
       state = SimStates.RUNNING;
     }
   }
