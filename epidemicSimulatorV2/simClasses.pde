@@ -118,13 +118,16 @@ class Simulation {
           walkers[i].infect(infProb/frameRate/100);
           if (testingCheck.pressed) {
             if (walkers[i].state == AgentStates.INFECTED && !walkers[i].confined) {
-              println(walkers[i].infTime);
-              walkers[i].confinedTimeBar();
+              println(testRelaiability);
+              walkers[i].confinedTimeBar((now-startTime) - walkers[i].infTime - testDelay*1000, testDelay*1000*2);
               if ((now-startTime) - walkers[i].infTime > testDelay*1000) {
-                if (random(1) <= testRelaiability) {
+                if (random(1) <= testRelaiability/100) {
                   walkers[i].confined = true;
                   walkers[i].x = 100;
                   walkers[i].y = 620;
+                }else{
+                  //Reset testing delay
+                  walkers[i].infTime = now - startTime;
                 }
               }
             }
@@ -500,11 +503,11 @@ class Walker {
           hide = false;
         }
       }
-      x = constrain(x, 0, 720-1);
-      y = constrain(y, 0, height-1);
+      x = constrain(x, size/2, 720-size/2);
+      y = constrain(y, size/2, height-size/2);
     } else {
-      x = constrain(x, 0, 200);
-      y = constrain(y, 520, height-1);
+      x = constrain(x, size/2, 200-size/2);
+      y = constrain(y, 520+size/2, height-size/2);
     }
   }
 
@@ -602,7 +605,7 @@ class Walker {
               if (y + size/2 > other.y - other.size/2 && y - size/2 < other.y + other.size/2) {
                 if (random(1) < chance) {
                   sim.walkers[i].state = AgentStates.INFECTED;
-                  sim.walkers[i].infTime = millis();
+                  sim.walkers[i].infTime = millis() - sim.startTime;
                 }
               }
             }
@@ -612,23 +615,25 @@ class Walker {
     }
   }
   
-  void confinedTimeBar(int val){
+  void confinedTimeBar(float val, float time){
     fill(255, 0, 0);
-    rect(x-10, y+size*1.3, map(val, -10, 20, 0, 100), 5);
+    rect(x-10, y+size*1.3, map(val, -time, 0, -10, 20), 2);
   }
 
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)
   void render() {
     noStroke();
+    int opacity = 255;
+    if (hide) opacity = 100;
     if (state == AgentStates.INFECTED) {
-      fill(255, 0, 0);
+      fill(255, 0, 0, opacity);
     } else if (state == AgentStates.DEAD) {
-      fill(0, 0, 0, 200);
+      fill(0, 0, 0, opacity);
     } else if (state == AgentStates.RECOVERED) {
-      fill(0, 0, 255);
+      fill(0, 0, 255, opacity);
     } else {
-      fill(0, 255, 0);
+      fill(0, 255, 0, opacity);
     }
-    if (!hide) circle(x, y, size);
+    circle(x, y, size);
   }
 }

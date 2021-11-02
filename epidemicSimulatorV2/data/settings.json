@@ -9,7 +9,7 @@
   "angleChange": "10",
   "recChance": "50",
   "fixedSpeed": "1",
-  "disableGraphs": false,
+  "disableGraphs": true,
   "testDelay": "5",
   "socialDist": false,
   "renderLen": "10",
