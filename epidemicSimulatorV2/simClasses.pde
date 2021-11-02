@@ -118,6 +118,8 @@ class Simulation {
           walkers[i].infect(infProb/frameRate/100);
           if (testingCheck.pressed) {
             if (walkers[i].state == AgentStates.INFECTED && !walkers[i].confined) {
+              println(walkers[i].infTime);
+              walkers[i].confinedTimeBar();
               if ((now-startTime) - walkers[i].infTime > testDelay*1000) {
                 if (random(1) <= testRelaiability) {
                   walkers[i].confined = true;
@@ -608,6 +610,11 @@ class Walker {
         }
       }
     }
+  }
+  
+  void confinedTimeBar(int val){
+    fill(255, 0, 0);
+    rect(x-10, y+size*1.3, map(val, -10, 20, 0, 100), 5);
   }
 
   // Renders the agent with different colors depending on state (red = infected, black = dead, blue = recovered, green = susceptible)

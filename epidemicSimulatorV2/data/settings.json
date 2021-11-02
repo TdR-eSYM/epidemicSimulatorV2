@@ -1,0 +1,23 @@
+{
+  "infTesting": true,
+  "MEAN": "3",
+  "sDistance": "2",
+  "sToughness": "50",
+  "deathChance": "30",
+  "renderEngine": false,
+  "susceptibleNum": "387",
+  "angleChange": "10",
+  "recChance": "50",
+  "fixedSpeed": "1",
+  "disableGraphs": false,
+  "testDelay": "5",
+  "socialDist": false,
+  "renderLen": "10",
+  "infectedNum": "25",
+  "agentSize": "10",
+  "testRela": "70",
+  "gaussMov": true,
+  "STD_DEV": "1",
+  "sReaction": "3",
+  "infChance": "20"
+}
