@@ -42,6 +42,11 @@ class Simulation {
       }
       if (renderProc.exitValue() != 0) {
         println("An error has ocurred with the renderEngine - Nonzero exitcode");
+          JOptionPane.showMessageDialog(frame,
+          "An error has ocurred in the rendering module.\nRemember you need the .NET Core runtime to use this feature.",
+          "RenderEngine error",
+          JOptionPane.ERROR_MESSAGE);
+          stop();
         return;
       }
       bakeData = loadBytes(dataPath("RenderEngine/export.sim"));
