@@ -86,7 +86,6 @@ class Simulation {
         float x = simData.getFloat(dataOffset);
         float y = simData.getFloat(dataOffset+4);
         float state = simData.getFloat(dataOffset+8);
-        println(state);
         dataOffset += 12;
         if (state == AgentStates.SUSCEPTIBLE) {
           fill(0, 255, 0);
@@ -118,7 +117,6 @@ class Simulation {
           walkers[i].infect(infProb/frameRate/100);
           if (testingCheck.pressed) {
             if (walkers[i].state == AgentStates.INFECTED && !walkers[i].confined) {
-              println(testRelaiability);
               walkers[i].confinedTimeBar((now-startTime) - walkers[i].infTime - testDelay*1000, testDelay*1000*2);
               if ((now-startTime) - walkers[i].infTime > testDelay*1000) {
                 if (random(1) <= testRelaiability/100) {
@@ -449,7 +447,6 @@ class Simulation {
       pauseTimestamp = millis();
     } else if (state == SimStates.PAUSED) {
       pauseTime += millis() - pauseTimestamp;
-      println(pauseTime);
       state = SimStates.RUNNING;
     }
   }
