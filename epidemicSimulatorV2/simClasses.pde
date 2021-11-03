@@ -20,6 +20,7 @@ class Simulation {
 
   float sDistance, sToughness, sReaction;
   float testDelay, testRelaiability;
+  int graphFrame = 0;
 
   Simulation(int agentNum, int agentSize, int initialInf, int STD_DEV, int MEAN, boolean gMovement) {
     this.agentNum = agentNum;
@@ -42,11 +43,11 @@ class Simulation {
       }
       if (renderProc.exitValue() != 0) {
         println("An error has ocurred with the renderEngine - Nonzero exitcode");
-          JOptionPane.showMessageDialog(frame,
-          "An error has ocurred in the rendering module.\nRemember you need the .NET Core runtime to use this feature.",
-          "RenderEngine error",
+        JOptionPane.showMessageDialog(frame, 
+          "An error has ocurred in the rendering module.\nRemember you need the .NET Core runtime to use this feature.", 
+          "RenderEngine error", 
           JOptionPane.ERROR_MESSAGE);
-          stop();
+        stop();
         return;
       }
       bakeData = loadBytes(dataPath("RenderEngine/export.sim"));
@@ -128,7 +129,7 @@ class Simulation {
                   walkers[i].confined = true;
                   walkers[i].x = 100;
                   walkers[i].y = 620;
-                }else{
+                } else {
                   //Reset testing delay
                   walkers[i].infTime = now - startTime;
                 }
@@ -188,6 +189,10 @@ class Simulation {
       infectedGraph.render();
       recoveredGraph.render();
       deadGraph.render();
+
+      if (saveGraphseCheck.pressed && deadGraph.index == deadGraph.sizex + deadGraph.x - 1) {
+        saveFrame(dataPath("/tmp/graph-"+(graphFrame++)+".png"));
+      }
     }
 
     frameRateShow();
@@ -274,6 +279,7 @@ class Simulation {
       fill(255);
       text("Render Engine: ", x+20, y+60);
       text("Disable Graphs: ", x+20, y+98);
+      text("Save Graphs: ", x+20, y+135);
 
       renderEngineCheck.x = x + 240;
       renderEngineCheck.y = y + 44;
@@ -281,8 +287,18 @@ class Simulation {
       graphsEngineCheck.x = x + 240;
       graphsEngineCheck.y = y + 82;
 
+      saveGraphseCheck.x = x + 240;
+      saveGraphseCheck.y = y + 120;
+      
+      if(graphsEngineCheck.pressed){
+        saveGraphseCheck.blocked = true;
+      }else{
+        saveGraphseCheck.blocked = false;
+      }
+
       renderEngineCheck.render();
       graphsEngineCheck.render();
+      saveGraphseCheck.render();
     }
 
     if (toolsWindow.open) {
@@ -464,6 +480,22 @@ class Simulation {
     infectedNumTB.text = str(initialInf);
     suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;
+    
+    if(saveGraphseCheck.pressed){
+      if(graphFrame == 0) return;
+      PGraphics pg;
+      pg = createGraphics(520*graphFrame, 320); //520 320
+      pg.beginDraw();
+      for(int i = graphFrame-1; i >= 0; i--){
+        PImage frame = loadImage(dataPath("/tmp/graph-"+(i+".png")));
+        pg.image(frame, (i*520)-740, -380);
+        deleteFile(dataPath("/tmp/graph-"+i+".png"));
+      }
+      pg.endDraw();
+      deleteFile(dataPath("/graphs/graph.png"));
+      pg.save(dataPath("/graphs/graph.png"));
+      graphFrame = 0;
+    }
   }
 }
 
@@ -616,8 +648,8 @@ class Walker {
       }
     }
   }
-  
-  void confinedTimeBar(float val, float time){
+
+  void confinedTimeBar(float val, float time) {
     fill(255, 0, 0);
     rect(x-10, y+size*1.3, map(val, -time, 0, -10, 20), 2);
   }

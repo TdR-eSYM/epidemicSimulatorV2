@@ -6,6 +6,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.File;
 
 Simulation sim = new Simulation(400, 10, 20, 1, 3, true);
 
@@ -88,12 +89,13 @@ Graph deadGraph = new Graph (740, 380, 520, 320, color(0, 0, 0), false);
 
 CheckBox renderEngineCheck = new CheckBox(740, 280, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox graphsEngineCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox saveGraphseCheck = new CheckBox(740, 280, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox gaussianMovementCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox switchCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox socialDistancingCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox testingCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 
-CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, gaussianMovementCheck, switchCheck, socialDistancingCheck, testingCheck};
+CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, saveGraphseCheck, gaussianMovementCheck, switchCheck, socialDistancingCheck, testingCheck};
 
 Window engineWindow, agentsWindow, toolsWindow;
 

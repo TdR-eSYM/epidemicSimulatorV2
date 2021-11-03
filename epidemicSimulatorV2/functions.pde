@@ -1,8 +1,16 @@
+void deleteFile(String path){
+  File f = new File(path);
+  if (f.exists()) {
+    f.delete();
+  }
+}
+
 void loadConfig() {
   try {
     config = loadJSONObject(dataPath("settings.json"));
     renderEngineCheck.pressed = config.getBoolean("renderEngine");
     graphsEngineCheck.pressed = config.getBoolean("disableGraphs");
+    saveGraphseCheck.pressed = config.getBoolean("saveGraphs");
     gaussianMovementCheck.pressed = config.getBoolean("gaussMov");
     socialDistancingCheck.pressed = config.getBoolean("socialDist");
     testingCheck.pressed = config.getBoolean("infTesting");
@@ -72,6 +80,7 @@ void UpdateSimConfig() {
 void saveConfig() {
   config.setBoolean("renderEngine", renderEngineCheck.pressed);
   config.setBoolean("disableGraphs", graphsEngineCheck.pressed);
+  config.setBoolean("saveGraphs", saveGraphseCheck.pressed);
   config.setBoolean("gaussMov", gaussianMovementCheck.pressed);
   config.setBoolean("socialDist", socialDistancingCheck.pressed);
   config.setBoolean("infTesting", testingCheck.pressed);

@@ -23,9 +23,9 @@ class Graph {
       stroke (c);
       for (int i = 0; i < (sizex + x); i++) {
         if (gData[i] == 0) continue;
-        if(fill){
+        if (fill) {
           line(i, gData[i], i, (sizey + y));
-        }else{
+        } else {
           point(i, gData[i]);
         }
       }
@@ -34,7 +34,7 @@ class Graph {
   }
 
   void update(int data, float agents) {
-    if (index == sizex + x - 1 || sim.state == SimStates.STOPPED)  {
+    if (index == sizex + x - 1 || sim.state == SimStates.STOPPED) {
       clean();
     }
     if (sim.state == SimStates.RUNNING) {
@@ -72,7 +72,7 @@ class CheckBox {
     } else { 
       fill (unPressedColor);
     }
-    if(blocked) fill (150);
+    if (blocked) fill (150);
     rect (x, y, sizex, sizey);
   }
 }
@@ -103,12 +103,12 @@ class Button {
 
     if (pressed) {
       fill ( r - 20, g - 20, b);
-      if(!blocked) buttonPressed(name);
+      if (!blocked) buttonPressed(name);
       pressed = false;
     } else { 
       fill (r, g, b);
     }
-    if(blocked) fill ( r - 40, g - 40, b);
+    if (blocked) fill ( r - 40, g - 40, b);
     rect (x, y, sizex, sizey);
   }
 }
@@ -118,7 +118,7 @@ class Window {
   String title;
   color backColor, barColor;
   boolean open = false;
-  Window(String title, int x, int y, int sizex, int sizey, color backColor, color barColor){
+  Window(String title, int x, int y, int sizex, int sizey, color backColor, color barColor) {
     this.title = title;
     this.x = x;
     this.y = y;
@@ -127,9 +127,9 @@ class Window {
     this.backColor = backColor;
     this.barColor = barColor;
   }
-  
-  void render(){
-    if(!open) return;
+
+  void render() {
+    if (!open) return;
     fill(backColor);
     rect(x, y, sizex, sizey);
     fill(barColor);
@@ -165,13 +165,13 @@ class TextBox {
     } else {
       fill(backColor);
     }
-    if(blocked) fill (100);
+    if (blocked) fill (100);
     rect(x, y, sizex, sizey);
 
     fill(foreColor);
     textSize(25);
     text(text, x + 7, y + 25);
-    if(percent){
+    if (percent) {
       textSize(15);
       text("%", x + 65, y + 25);
     }
