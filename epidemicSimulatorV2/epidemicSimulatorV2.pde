@@ -113,6 +113,11 @@ void setup() {
   agentsWindow = new Window("Agent Settings", width/2-250, 260, 300, 400, color(80), color(50));
 
   toolsWindow = new Window("Simulation Tools", width/2-610, 20, 300, 300, color(80), color(50));
+  
+  infectedGraph.init();
+  susceptibleGraph.init();
+  recoveredGraph.init();
+  deadGraph.init();
 }
 
 void draw() {

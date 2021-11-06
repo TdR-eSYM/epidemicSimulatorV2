@@ -3,50 +3,49 @@ class Graph {
   int y;
   int sizex;
   int sizey;
-  int [] gData;
   int index;
   color c;
   boolean fill;
-
+  PGraphics pg;
   Graph (int x, int y, int sizex, int sizey, color c, boolean fill) {
     this.x = x;
     this.y = y;
     this.sizex = sizex;
     this.sizey = sizey;
-    this.index = x;
-    this.gData = new int[sizex + x];
+    this.index = 0;
     this.c = c;
     this.fill = fill;
   }
+  
+  void init (){
+    pg = createGraphics(sizex, sizey);
+  }
+  
   void render() {
     if (sim.state != SimStates.STOPPED) {
-      stroke (c);
-      for (int i = 0; i < (sizex + x); i++) {
-        if (gData[i] == 0) continue;
-        if (fill) {
-          line(i, gData[i], i, (sizey + y));
-        } else {
-          point(i, gData[i]);
-        }
-      }
-      stroke(0);
+      image(pg, x, y);
     }
   }
 
   void update(int data, float agents) {
-    if (index == sizex + x - 1 || sim.state == SimStates.STOPPED) {
+    float yOff = sizey - int((data/agents)*sizey);
+    pg.beginDraw();
+    if (index == sizex - 1 || sim.state == SimStates.STOPPED) {
       clean();
     }
-    if (sim.state == SimStates.RUNNING) {
-      gData[index++] = y + sizey - int((data/agents)*sizey);
+    pg.stroke(c);
+    if (fill) {
+      pg.line(index, yOff, index, sizey);
+    } else {
+      pg.point(index, yOff);
     }
+    index++;
+    pg.endDraw();
   }
 
-  private void clean() {
-    for (int i = 0; i < sizex + x; i++) {
-      gData[i] = 0;
-    }
-    index = x;
+  void clean() {
+    index = 0;
+    pg.clear();
   }
 }
 
