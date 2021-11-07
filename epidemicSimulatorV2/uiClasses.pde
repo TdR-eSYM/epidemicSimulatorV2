@@ -16,11 +16,11 @@ class Graph {
     this.c = c;
     this.fill = fill;
   }
-  
-  void init(){
+
+  void init() {
     pg = createGraphics(sizex, sizey);
   }
-  
+
   void render() {
     if (sim.state != SimStates.STOPPED) {
       image(pg, x, y);
@@ -33,13 +33,15 @@ class Graph {
     if (index == sizex - 1 || sim.state == SimStates.STOPPED) {
       clean();
     }
-    pg.stroke(c);
-    if (fill) {
-      pg.line(index, yOff, index, sizey);
-    } else {
-      pg.point(index, yOff);
+    if (sim.state == SimStates.RUNNING) {
+      pg.stroke(c);
+      if (fill) {
+        pg.line(index, yOff, index, sizey);
+      } else {
+        pg.point(index, yOff);
+      }
+      index++;
     }
-    index++;
     pg.endDraw();
   }
 

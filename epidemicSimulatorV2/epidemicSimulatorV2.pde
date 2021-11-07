@@ -99,8 +99,9 @@ CheckBox gaussianMovementCheck = new CheckBox(740, 290, 20, 20, color(230), colo
 CheckBox switchCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox socialDistancingCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox testingCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
+CheckBox debugMode = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);
 
-CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, saveGraphseCheck, gaussianMovementCheck, switchCheck, socialDistancingCheck, testingCheck};
+CheckBox[] checkboxes = {renderEngineCheck, graphsEngineCheck, saveGraphseCheck, gaussianMovementCheck, switchCheck, socialDistancingCheck, testingCheck, debugMode};
 
 Window engineWindow, agentsWindow, toolsWindow;
 
@@ -130,6 +131,7 @@ void draw() {
   background(255);
   sim.tick();
   sim.renderUI();
+  //if(debugMode.pressed) sim.debugUI();
 }
 
 void exit() {

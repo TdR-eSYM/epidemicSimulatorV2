@@ -3,6 +3,7 @@ class Simulation {
   Walker[] walkers;
   int agentNum, agentSize, infected, dead, immune, initialInf, STD_DEV, MEAN;
   float startInfProb, infProb, deathProb, recProb;
+  int previousInf = 0;
 
   int renderLength = 0;
   int dataOffset = 0;
@@ -21,6 +22,14 @@ class Simulation {
   float sDistance, sToughness, sReaction;
   float testDelay, testRelaiability;
   int graphFrame = 0;
+
+  long rTimestamp = 0;
+  int rInterval = 120;
+  float rDisplay;
+
+  float R0 = 1;
+  float previousR0;
+  int animFrames;
 
   Simulation(int agentNum, int agentSize, int initialInf, int STD_DEV, int MEAN, boolean gMovement) {
     this.agentNum = agentNum;
@@ -68,6 +77,7 @@ class Simulation {
       }
     }
     initialInf = infected;
+    previousInf = initialInf;
     state = SimStates.RUNNING;
     startTime = millis();
     pauseTime = 0;
@@ -139,6 +149,12 @@ class Simulation {
         }
         walkers[i].render();
       }
+      if (frameCount - rTimestamp >= rInterval && state == SimStates.RUNNING) {
+        rTimestamp = frameCount;
+        R0 = (float) infected/previousInf;
+        previousInf = infected;
+        animFrames = 0;
+      }
     }
   }
 
@@ -179,11 +195,30 @@ class Simulation {
 
     toolsBtn.render();
 
+
+    fill(220);
+    textSize(90);
+    if (sim.state == SimStates.STOPPED) {
+      text("R=-.--", 840, 570);
+    } else {
+      if (animFrames < 60) {
+        rDisplay += (R0-previousR0)/60;
+        animFrames++;
+      } else {
+        previousR0 = R0;
+        rDisplay = R0;
+      }
+      text("R="+nf(rDisplay, 0, 2), 840, 570);
+    }
+
+
     if (!graphsEngineCheck.pressed) {
+
       infectedGraph.update(infected, agentNum);
       susceptibleGraph.update(agentNum-infected-dead-immune, agentNum);
       recoveredGraph.update(immune, agentNum);
       deadGraph.update(dead, agentNum);
+
 
       susceptibleGraph.render();
       infectedGraph.render();
@@ -287,6 +322,7 @@ class Simulation {
       text("Render Engine: ", x+20, y+60);
       text("Disable Graphs: ", x+20, y+98);
       text("Save Graphs: ", x+20, y+135);
+      text("Debug Mode: ", x+20, y+172);
 
       renderEngineCheck.x = x + 240;
       renderEngineCheck.y = y + 44;
@@ -296,6 +332,9 @@ class Simulation {
 
       saveGraphseCheck.x = x + 240;
       saveGraphseCheck.y = y + 120;
+      
+      debugMode.x = x + 240;
+      debugMode.y = y + 158;
 
       if (graphsEngineCheck.pressed) {
         saveGraphseCheck.blocked = true;
@@ -306,6 +345,7 @@ class Simulation {
       renderEngineCheck.render();
       graphsEngineCheck.render();
       saveGraphseCheck.render();
+      debugMode.render();
     }
 
     if (toolsWindow.open) {
@@ -487,7 +527,10 @@ class Simulation {
     infectedNumTB.text = str(initialInf);
     suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;
-
+    R0 = 1;
+    previousR0 = 0;
+    animFrames = 0;
+    rDisplay = 0;
     if (saveGraphseCheck.pressed) {
       if (graphExportBuffer.size() == 0) return;
       PGraphics exportGraph = createGraphics(520*graphExportBuffer.size(), 320);
