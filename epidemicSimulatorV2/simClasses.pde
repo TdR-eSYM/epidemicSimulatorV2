@@ -190,8 +190,15 @@ class Simulation {
       recoveredGraph.render();
       deadGraph.render();
 
-      if (saveGraphseCheck.pressed && deadGraph.index == deadGraph.sizex + deadGraph.x - 1) {
-        saveFrame(dataPath("/tmp/graph-"+(graphFrame++)+".png"));
+      if (saveGraphseCheck.pressed && deadGraph.index == deadGraph.sizex - 1) {
+        println("Saving");        
+        PGraphics gBuffer = createGraphics(520, 320);
+        gBuffer.beginDraw();
+        for (int i = 0; i < graphs.length; i++) {
+          gBuffer.image(graphs[i].pg, 0, 0);
+        }      
+        gBuffer.endDraw();
+        graphExportBuffer.add(gBuffer);
       }
     }
 
@@ -289,10 +296,10 @@ class Simulation {
 
       saveGraphseCheck.x = x + 240;
       saveGraphseCheck.y = y + 120;
-      
-      if(graphsEngineCheck.pressed){
+
+      if (graphsEngineCheck.pressed) {
         saveGraphseCheck.blocked = true;
-      }else{
+      } else {
         saveGraphseCheck.blocked = false;
       }
 
@@ -480,21 +487,17 @@ class Simulation {
     infectedNumTB.text = str(initialInf);
     suceptibleNumTB.text = str(agentNum - initialInf);
     state = SimStates.STOPPED;
-    
-    if(saveGraphseCheck.pressed){
-      if(graphFrame == 0) return;
-      PGraphics pg;
-      pg = createGraphics(520*graphFrame, 320); //520 320
-      pg.beginDraw();
-      for(int i = graphFrame-1; i >= 0; i--){
-        PImage frame = loadImage(dataPath("/tmp/graph-"+(i+".png")));
-        pg.image(frame, (i*520)-740, -380);
-        deleteFile(dataPath("/tmp/graph-"+i+".png"));
+
+    if (saveGraphseCheck.pressed) {
+      if (graphExportBuffer.size() == 0) return;
+      PGraphics exportGraph = createGraphics(520*graphExportBuffer.size(), 320);
+      exportGraph.beginDraw();
+      for (int i = 0; i < graphExportBuffer.size(); i++) {
+        exportGraph.image(graphExportBuffer.get(i), 520*i, 0);
       }
-      pg.endDraw();
-      deleteFile(dataPath("/graphs/graph.png"));
-      pg.save(dataPath("/graphs/graph.png"));
-      graphFrame = 0;
+      exportGraph.endDraw();
+      exportGraph.save(dataPath("/graphs/" + year() + "_" + month() + "_" + day() + " " + hour() + "-" + minute() + "-" + second() + ".png"));
+      graphExportBuffer = new ArrayList<PImage>();
     }
   }
 }

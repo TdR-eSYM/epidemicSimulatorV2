@@ -7,13 +7,15 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
+import java.util.ArrayList;
 
 Simulation sim = new Simulation(400, 10, 20, 1, 3, true);
 
 Random gen;
 
-// Textbox starter number of agents
+ArrayList<PImage> graphExportBuffer = new ArrayList<PImage>();
 
+// Textbox starter number of agents
 TextBox suceptibleNumTB = new TextBox(760, 140, 125, 31, color(255), color(120), false, false);
 
 // Textbox starter number of infected
@@ -86,6 +88,9 @@ Graph infectedGraph = new Graph (740, 380, 520, 320, color(200, 0, 0, 160), true
 Graph susceptibleGraph = new Graph (740, 380, 520, 320, color(0, 200, 0, 160), true);
 Graph recoveredGraph = new Graph (740, 380, 520, 320, color(0, 0, 255), false);
 Graph deadGraph = new Graph (740, 380, 520, 320, color(0, 0, 0), false);
+
+//This also controls export layer order
+Graph[] graphs = {susceptibleGraph, infectedGraph, recoveredGraph, deadGraph};
 
 CheckBox renderEngineCheck = new CheckBox(740, 280, 20, 20, color(230), color(0, 230, 0), false);
 CheckBox graphsEngineCheck = new CheckBox(740, 290, 20, 20, color(230), color(0, 230, 0), false);

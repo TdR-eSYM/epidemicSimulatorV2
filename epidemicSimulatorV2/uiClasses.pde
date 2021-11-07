@@ -17,7 +17,7 @@ class Graph {
     this.fill = fill;
   }
   
-  void init (){
+  void init(){
     pg = createGraphics(sizex, sizey);
   }
   
