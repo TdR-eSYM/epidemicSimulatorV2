@@ -51,6 +51,39 @@ class Graph {
   }
 }
 
+class FPSGraph extends Graph {
+  FPSGraph (int x, int y, int sizex, int sizey, color c, boolean fill) {
+    super(x, y, sizex, sizey, c, fill);
+  }
+  
+  @Override
+  void init(){
+    super.init();
+  }
+
+  @Override
+    void update(int data, float agents) {
+    float yOff = sizey - int((data/agents)*sizey);
+    pg.beginDraw();
+    if (index == sizex - 1) {
+      clean();
+    }
+    pg.stroke(c);
+    if (fill) {
+      pg.line(index, yOff, index, sizey);
+    } else {
+      pg.point(index, yOff);
+    }
+    index++;
+    pg.endDraw();
+  }
+  
+  @Override
+  void render(){
+    super.render();
+  }
+}
+
 class CheckBox {
   int x, y, r, g, b;
   int sizex;

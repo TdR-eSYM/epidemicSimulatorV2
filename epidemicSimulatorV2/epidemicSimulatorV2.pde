@@ -89,6 +89,9 @@ Graph susceptibleGraph = new Graph (740, 380, 520, 320, color(0, 200, 0, 160), t
 Graph recoveredGraph = new Graph (740, 380, 520, 320, color(0, 0, 255), false);
 Graph deadGraph = new Graph (740, 380, 520, 320, color(0, 0, 0), false);
 
+//DEUB
+FPSGraph fpsGraph = new FPSGraph(0, 400, 520, 320, color(0, 0, 0, 100), true);
+
 //This also controls export layer order
 Graph[] graphs = {susceptibleGraph, infectedGraph, recoveredGraph, deadGraph};
 
@@ -124,6 +127,8 @@ void setup() {
   susceptibleGraph.init();
   recoveredGraph.init();
   deadGraph.init();
+  
+  fpsGraph.init();
 }
 
 void draw() {
@@ -131,7 +136,7 @@ void draw() {
   background(255);
   sim.tick();
   sim.renderUI();
-  //if(debugMode.pressed) sim.debugUI();
+  if(debugMode.pressed) sim.debugUI();
 }
 
 void exit() {

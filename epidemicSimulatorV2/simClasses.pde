@@ -151,7 +151,7 @@ class Simulation {
       }
       if (frameCount - rTimestamp >= rInterval && state == SimStates.RUNNING) {
         rTimestamp = frameCount;
-        R0 = (float) infected/previousInf;
+        if(previousInf != 0) R0 = (float) infected/previousInf;
         previousInf = infected;
         animFrames = 0;
       }
@@ -195,20 +195,21 @@ class Simulation {
 
     toolsBtn.render();
 
-
-    fill(220);
-    textSize(90);
-    if (sim.state == SimStates.STOPPED) {
-      text("R=-.--", 840, 570);
-    } else {
-      if (animFrames < 60) {
-        rDisplay += (R0-previousR0)/60;
-        animFrames++;
+    if(!graphsEngineCheck.pressed){
+      fill(220);
+      textSize(90);
+      if (sim.state == SimStates.STOPPED) {
+        text("R=-.--", 840, 570);
       } else {
-        previousR0 = R0;
-        rDisplay = R0;
+        if (animFrames < 60) {
+          rDisplay += (R0-previousR0)/60;
+          animFrames++;
+        } else {
+          previousR0 = R0;
+          rDisplay = R0;
+        }
+        text("R="+nf(rDisplay, 0, 2), 840, 570);
       }
-      text("R="+nf(rDisplay, 0, 2), 840, 570);
     }
 
 
@@ -498,6 +499,11 @@ class Simulation {
 
       UpdateSimConfig();
     }
+  }
+  
+  void debugUI(){
+    fpsGraph.update(int(frameRate), 60);
+    fpsGraph.render();
   }
 
   void start() {
