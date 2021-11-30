@@ -427,7 +427,7 @@ class Simulation {
 
       text("Fixed Movement: ", x+20, y+212);
 
-      text("Agent globals: ", x+20, y+315);
+      text("Agent globals (%/s): ", x+20, y+315);
 
       textSize(14);
 
